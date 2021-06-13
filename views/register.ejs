@@ -1,0 +1,92 @@
+<html>
+    <head>
+        <%- include ('partials/head') -%>
+        <style>
+            .rowform {
+                margin-bottom: 15px;
+            }
+            .container-fluid {
+                margin-top: 5%;
+                margin-bottom: 5%;
+                border:lightblue; 
+                border-width:1px; 
+                border-style:solid;
+                border-radius: 25px;
+            }
+            input {
+                color: black;
+            }
+
+        </style>
+        <title>VERITAS - Register</title>
+    </head>
+    <body>
+        <%- include ('partials/nav') -%>
+        <div class="container-fluid" style="align-content: center; width: 60%">
+            <div class="row" style="margin-top: 15px;">
+                    <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Registration</h2>
+            </div>
+            <div class="row formrow">
+                <form method="POST" action="/register-done" style="margin-left: 17.5%;">
+                    <div class="row rowform">
+                        <label class="col-sm-4">First Name</label>
+                        <input class="col-sm-8" type="text" name="fname" />
+                    </div>
+                    <div class="row rowform">
+                        <label class="col-sm-4">Middle Name (optional)</label>
+                        <input class="col-sm-8" type="text" name="mname" />
+                    </div>
+                    <div class="row rowform">
+                        <label class="col-sm-4">Last Name</label>
+                        <input class="col-sm-8" type="text" name="lname" />
+                    </div>
+                    <div class="row rowform">
+                        <label class="col-sm-4">Username</label>
+                        <input class="col-sm-8" type="text" name="username" />
+                    </div>
+                    <div class="row rowform">
+                        <label class="col-sm-4">Password</label>
+                        <input class="col-sm-8" type="password" name="password" />    
+                    </div>
+                    <div class="row rowform">
+                        <label class="col-sm-4">Confirm Password</label>
+                        <input class="col-sm-8" type="password" name="confPassword" />  
+                    </div>
+                    <div class="row rowform">
+                        <label class="col-sm-4">Phone no.</label>
+                        <input class="col-sm-8" type="text" name="phone" />
+                    </div>
+                    <div class="row rowform">
+                        <label class="col-sm-4">E-mail</label>
+                        <input class="col-sm-8" type="email" name="email" />
+                    </div>
+                    <div class="row rowform">
+                        <label class="col-sm-4">Date of Birth</label>
+                        <input class="col-sm-8" type="date" name="dob" />
+                    </div>
+                    <div class="row rowform">
+                        <label class="col-sm-4">Address</label>
+                        <input class="col-sm-8" type="text" name="address" />
+                    </div>
+                    <div class="row rowform">
+                        <label class="col-sm-4">City</label>
+                        <input class="col-sm-8" type="text" name="city" />
+                    </div>
+                    <div class="row rowform">
+                        <label class="col-sm-4">State</label>
+                        <input class="col-sm-8" type="text" name="state" />
+                    </div>
+                    <div class="row rowform">
+                        <label class="col-sm-4">Country</label>
+                        <input class="col-sm-8" type="text" name="country" />
+                    </div>
+                    <div class="row rowform">
+                        <label class="col-sm-4">Photo</label>
+                        <input class="col-sm-8" type="file" name="photo" style="background-color: white;"/>
+                    </div>
+                    <button type="submit" style="margin-top: 15px;">Register</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

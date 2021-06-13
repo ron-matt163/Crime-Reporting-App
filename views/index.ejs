@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include ('partials/head') -%>
+    <style>
+      form {
+          border:lightblue; 
+          border-width:1px; 
+          border-style:solid;
+          border-radius: 25px;
+          padding-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include ('partials/nav') -%>
+    <div class="container-fluid">
+        <div class="row content">
+            <h1>VERITAS</h1>
+            <p class="headerpara">An Online Crime Reporting System</p>
+            <hr />
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <img src="/assets/justice.jpg" alt="background-image" style="width: 100%;"/>
+            </div>
+            <div class="col-sm-4">
+                <form  method="POST" action="/" style="width: 550px;">
+                    <h2 class="header">Login Form</h2>
+                    <hr/>
+                    <div class="container" style="margin-left: 50px; width: 100%;">
+                      <div style="float: left;">
+                        <p style="margin: 20px; font-size: 18px;">
+                            <label for="username"><strong>Username</strong>
+                            <input type="text" placeholder="Enter Username" name="username" style="width: 200px;" required>
+                            </label>
+                        </p>
+                        <p style="margin: 20px; font-size: 18px;">
+                            <label for="password"><strong>Password</strong>
+                            <input type="password" placeholder="Enter Password" name="password" style="width: 200px;" required>
+                            </label>
+                        </p>
+                        </div>
+                    </div>
+                    <button type="submit">Login</button>
+                    <div class="container" style="background-color: navy; width: 95% ; margin: 10px; padding: 10px;">
+                      <p style="margin: 15px;">
+                        <label style="padding-left: 15px">
+                            <input type="checkbox"  checked="checked" name="remember"/> Remember me
+                        </label>       
+                        <br />
+                        <span class="password" style="padding: 20px; color: oldlace;"><a href="#" style="color: white;"> Forgot password?</a></span>               
+                      </p>        
+                      <p style="margin: 15px;">
+                        <label style="padding-left: 15px">
+                            Dont have an account?
+                        </label>
+                        <span class="password" style="padding: 20px;"><a href="/register" style="color: white;">Register</a></span>
+                      </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
