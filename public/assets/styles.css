@@ -4,13 +4,28 @@ body{
     color: #989898;
 }
 
-#todo-table{
+#table-options{
     position: relative;
-    width: 95%;
     background: #090d13;
     margin: 0 auto;
     padding: 20px;
+    border-radius: 25px;
+}
+
+.options-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.option {
+    width: 100%;
+    padding: 20px;
     box-sizing: border-box;
+    font-family: arial;
+    font-size: 20px;
+    cursor: pointer;
+    letter-spacing: 1px;
 }
 
 #todo-table form:after{
@@ -60,4 +75,8 @@ input {
 
 .formrow {
     align-content: center;
+}
+
+.heading-logo {
+    color: lightskyblue;
 }

@@ -10,6 +10,9 @@
           border-radius: 25px;
           padding-top: 10px;
       }
+      .rowwithform {
+        margin-left: 5%;
+      } 
     </style>
   </head>
   <body>
@@ -25,7 +28,13 @@
                 <img src="/assets/justice.jpg" alt="background-image" style="width: 100%;"/>
             </div>
             <div class="col-sm-4">
-                <form  method="POST" action="/" style="width: 550px;">
+                <div class="row">
+                  <% if (message.length > 0) { %>
+                    <div class="alert alert-danger col-sm-12" style="width: 80%; text-align: center; font-size: 140%; margin-left: 10%;"><%= message %></div>
+                  <% } %>
+                </div>
+                <div class="row rowwithform">
+                  <form  method="POST" action="/" style="width: 550px;" onsubmit="disperr()">
                     <h2 class="header">Login Form</h2>
                     <hr/>
                     <div class="container" style="margin-left: 50px; width: 100%;">
@@ -58,7 +67,8 @@
                         <span class="password" style="padding: 20px;"><a href="/register" style="color: white;">Register</a></span>
                       </p>
                     </div>
-                </form>
+                  </form>
+                </div>
             </div>
         </div>
     </div>

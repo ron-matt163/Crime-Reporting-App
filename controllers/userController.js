@@ -3,7 +3,7 @@ var urlencodedParser = bodyParser.urlencoded({extended: false});
 
 module.exports = app => {
     app.get(['/','/home'],(req,res) => {
-        res.render('index');
+        res.render('index',{message: ""});
     });
     app.post(['/','/home'],urlencodedParser,(req,res) => {
         var sess = req.session; 
