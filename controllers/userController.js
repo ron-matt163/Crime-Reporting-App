@@ -1,5 +1,6 @@
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
+const { check, validationResult } = require('express-validator')
 
 module.exports = app => {
     app.get(['/','/home'],(req,res) => {
@@ -40,44 +41,85 @@ module.exports = app => {
     app.get('/register-done',(req,res) => {
         res.render('register-done');
     });
-    app.post('/register-done',urlencodedParser,(req,res) => {
-        var message = '';
-        if(req.method == "POST"){
-           var post  = req.body;
-           var mid = post.mname;
-           if(mid.length != 0) {
-               mid += " ";
-           }
-           var name= post.fname + " " + mid + post.lname;
-           var username= post.username;
-           var password= post.password;
-           var confPassword= post.confPassword;
-           var phone= post.phone;
-           var email= post.email;
-           var dob= post.dob;
-           var address= post.address;
-           var city= post.city;
-           var state= post.state;
-           var country= post.country;
-           var photo= post.photo;
-           var type= "Citizen";
-      
-           var sql = "INSERT INTO `User`(`name`,`username`,`password`,`phone`,`email`,`dob`,`address`,`city`,`state`,`country`,`photo_file`,`type`) VALUES ('" + name + "','" + username + "','" + password + "','" + phone + "','" + email + "','" + dob + "','" + address + "','" + city + "','" + state + "','" + country + "','" + photo + "','" + type + "')";
-      
-           var query = db.query(sql, function(err, result) {
-              if (err) {
-                  message = "Server error! Please try again later";
-                  throw err;
-              }
-              else {
-                message = "Success! Your account has been created.";
-              }
-              var fn = (name.split(' '))[0];
-              res.render('register-done',{message: message, fname:fn});
-           });
-      
+    app.post('/register-done',urlencodedParser, [
+        check('fname', 'fname')
+            .exists()
+            .isLength({ min: 1 }),
+        check('lname', 'lname')
+            .exists()
+            .isLength({ min: 1 }),
+        check('phone', 'phone')
+            .exists()
+            .isLength({ min: 1 }),
+        check('email', 'email')
+            .exists()
+            .isLength({ min: 1 }),
+        check('username', 'username')
+            .exists()
+            .isLength({ min: 1 }),
+        check('dob', 'dob')
+            .exists()
+            .isLength({ min: 1 }),
+        check('address', 'address')
+            .exists()
+            .isLength({ min: 1 }),
+        check('city', 'city')
+            .exists()
+            .isLength({ min: 1 }),        
+        check('state', 'state')
+            .exists()
+            .isLength({ min: 1 }),
+        check('country', 'country')
+            .exists()
+            .isLength({ min: 1 })
+        
+    ], (req,res) => {
+        const errors = validationResult(req)
+        if(!errors.isEmpty()) {
+            // return res.status(422).jsonp(errors.array())
+            const alert = errors.array()
+            res.render('register', {
+                alert
+            })
         } else {
-           res.render('register-done');
+            var message = '';
+            if(req.method == "POST"){
+            var post  = req.body;
+            var mid = post.mname;
+            if(mid.length != 0) {
+                mid += " ";
+            }
+            var name= post.fname + " " + mid + post.lname;
+            var username= post.username;
+            var password= post.password;
+            var confPassword= post.confPassword;
+            var phone= post.phone;
+            var email= post.email;
+            var dob= post.dob;
+            var address= post.address;
+            var city= post.city;
+            var state= post.state;
+            var country= post.country;
+            var photo= post.photo;
+            var type= "Citizen";
+        
+            var sql = "INSERT INTO `User`(`name`,`username`,`password`,`phone`,`email`,`dob`,`address`,`city`,`state`,`country`,`photo_file`,`type`) VALUES ('" + name + "','" + username + "','" + password + "','" + phone + "','" + email + "','" + dob + "','" + address + "','" + city + "','" + state + "','" + country + "','" + photo + "','" + type + "')";
+        
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message = "Server error! Please try again later";
+                    throw err;
+                }
+                else {
+                    message = "Success! Your account has been created.";
+                }
+                var fn = (name.split(' '))[0];
+                res.render('register-done',{message: message, fname:fn});
+            });
+        
+            } else {
+            res.render('register-done');
+            }
         }
     });
     app.get('/logout',(req,res) => {
