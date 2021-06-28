@@ -52,99 +52,73 @@
             <div class="row" style="margin-top: 15px;">
                 <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Registration</h2>
             </div>
-            <% var strings = []; %>
-            <% if(typeof alert != 'undefined') { %>
-                <% alert.forEach(function(error) { %>
-                    <% for ( i = 0; i < alert.length; ++i ) { %>
-                            <% strings.push(alert[i].msg); %>
-                        <% } %>
-                <% }) %>
-            <% } %>
             <div class="row formrow">
                 <form method="POST" action="/register-done" style="margin-left: 17.5%;">
                     <div class="row rowform">
                         <label class="col-sm-4">First Name<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8" type="text" name="fname">
-                        <% if(strings.includes('fname')) { %>
-                            <p style="color: red; margin-left: 15px;">First Name is required</p>
-                        <% } %>
+                        <input class="col-sm-8" type="text" name="fname" required="">
+                        <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">Middle Name (optional)</label>
-                        <input class="col-sm-8" type="text" name="mname">
+                        <input class="col-sm-8" type="text" name="mname" >
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">Last Name<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8" type="text" name="lname">
-                        <% if(strings.includes('lname')) { %>
-                            <p style="color: red; margin-left: 15px;">Last Name is required</p>
-                        <% } %>
+                        <input class="col-sm-8" type="text" name="lname" required="">
+                        <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">Username<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8" type="text" name="username">
-                        <% if(strings.includes('username')) { %>
-                            <p style="color: red; margin-left: 15px;">Username is required</p>
-                        <% } %>
+                        <input class="col-sm-8" type="text" name="username" required="">
+                        <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">Password<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8" id="pwd" type="password" name="password" onkeyup="minLengthFunc()" onkeydown="minLengthFunc()">
+                        <input class="col-sm-8" id="pwd" type="password" name="password" onkeyup="minLengthFunc()" onkeydown="minLengthFunc()" required="">
+                        <p class="errmsg" style="color: red; display: none;">Field is required</p>
                         <p id="minPassMsg" style="color: red; display: none; margin-left: 15px;">Must have atleast 4 characters</p>        
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">Confirm Password<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8" id="confpwd" type="password" name="confPassword" onkeyup="matchPassword()" onkeydown="matchPassword()">
+                        <input class="col-sm-8" id="confpwd" type="password" name="confPassword" onkeyup="matchPassword()" onkeydown="matchPassword()" required="">
+                        <p class="errmsg" style="color: red; display: none;">Field is required</p>
                         <p id="confmsg" style="color: red; display: none; margin-left: 15px;">Password does not match</p>    
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">Phone no.<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8" type="text" name="phone">
-                        <% if(strings.includes('phone')) { %>
-                            <p style="color: red; margin-left: 15px;">Phone No. is required</p>
-                        <% } %>
+                        <input class="col-sm-8" type="text" name="phone" required="">
+                        <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">E-mail<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8" type="email" name="email">
-                        <% if(strings.includes('email')) { %>
-                            <p style="color: red; margin-left: 15px;">Email is required</p>
-                        <% } %>
+                        <input class="col-sm-8" type="email" name="email" required="">
+                        <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">Date of Birth<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8" type="date" name="dob">
-                        <% if(strings.includes('dob')) { %>
-                            <p style="color: red; margin-left: 15px;">DOB is required</p>
-                        <% } %>
+                        <input class="col-sm-8" type="date" name="dob" required="">
+                        <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">Address<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8" type="text" name="address">
-                        <% if(strings.includes('address')) { %>
-                            <p style="color: red; margin-left: 15px;">Address is required</p>
-                        <% } %>
+                        <input class="col-sm-8" type="text" name="address" required="">
+                        <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">City<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8" type="text" name="city">
-                        <% if(strings.includes('city')) { %>
-                            <p style="color: red; margin-left: 15px;">City is required</p>
-                        <% } %>
+                        <input class="col-sm-8" type="text" name="city" required="">
+                        <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">State<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8" type="text" name="state">
-                        <% if(strings.includes('state')) { %>
-                            <p style="color: red; margin-left: 15px;">State is required</p>
-                        <% } %>
+                        <input class="col-sm-8" type="text" name="state" required="">
+                        <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">Country<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8" type="text" name="country">
-                        <% if(strings.includes('country')) { %>
-                            <p style="color: red; margin-left: 15px;">Country is required</p>
-                        <% } %>
+                        <input class="col-sm-8" type="text" name="country" required="">
+                        <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">Photo</label>
