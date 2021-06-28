@@ -29,6 +29,11 @@
             <div class="row formrow">
                 <form method="POST" action="/citizen/logComplaint" style="margin-left: 17.5%;">
                     <div class="row rowform">
+                        <label class="col-sm-4">Type<span style="color: red; font-size: small; margin: 5px;">*</span></label>
+                        <input class="col-sm-8" type="text" name="type" required="">
+                        <p class="errmsg" style="color: red; display: none;">Field is required</p>
+                    </div>
+                    <div class="row rowform">
                         <label class="col-sm-4">Title<span style="color: red; font-size: small; margin: 5px;">*</span></label>
                         <input class="col-sm-8" type="text" name="title" required="">
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
@@ -36,12 +41,9 @@
                     <div class="row rowform">
                         <label class="col-sm-4">Police Station<span style="color: red; font-size: small; margin: 5px;">*</span></label><br />
                         <select class="col-sm-8" name="policeStation" style="width: 67%; height: 24px; margin: 5px; margin-left: 30px;" required="">
-                            <option value="">*Please select*</option>
-                            <option value="A">Station A</option>
-                            <option value="B">Station B</option>
-                            <option value="C">Station C</option>
-                            <option value="D">Station D</option>
-                            <option value="E">Station E</option>
+                            <% for (const i in dropdownVals) { %>
+                                <option value="<%= dropdownVals[i].id %>"> <%= dropdownVals[i].name %> </option>
+                            <% } %>
                         </select>
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>

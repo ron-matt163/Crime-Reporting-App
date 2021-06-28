@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <%- include ('partials/head') -%>      
+        <style>
+            .container-fluid {
+                margin-top: 5%;
+                margin-bottom: 5%;
+                border:black; 
+                border-width:1px; 
+                border-style:solid;
+                border-radius: 25px;
+                background-color: lightblue;
+                color: black;
+            }
+            table {
+                margin-top: 2.5%;
+                margin-bottom: 2.5%;
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+                border-radius: 25px;
+                border-color: rgb(14, 14, 99);
+
+            }
+
+            td, th {
+                border: 1px solid grey;  
+                text-align: left;
+                padding: 8px;
+                color: black;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+
+        </style> 
+    </head>
+    <body>
+        <%- include ('partials/loginNav') -%>
+        <div class="container-fluid" style="align-content: center; width: 60%">
+            <table>
+                <tr>
+                  <th>Type</th>
+                  <th>Title</th>
+                  <th>Police Station</th>
+                  <th>Address</th>
+                  <th>details</th>
+                  <th>Status</th>
+                </tr>
+                <% for ( const i in complaints ) { %>
+                    <tr>
+                        <td><%= complaints[i].type %></td>
+                        <td><%= complaints[i].title %></td>
+                        <td><%= complaints[i].name %></td>
+                        <td><%= complaints[i].address %></td>
+                        <td><%= complaints[i].details %></td>
+                        <td><%= complaints[i].status %></td>
+                      </tr>
+                <% } %>
+                </table>
+        </div>
+    </body>
+
+</html>

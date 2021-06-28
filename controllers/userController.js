@@ -66,7 +66,7 @@ module.exports = app => {
       
            var query = db.query(sql, function(err, result) {
               if (err) {
-                  message = "Server error! Please try again later"
+                  message = "Server error! Please try again later";
                   throw err;
               }
               else {

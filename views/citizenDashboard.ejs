@@ -20,6 +20,16 @@
         <%- include ('partials/loginNav') -%>
         <% var fn = user.name.split(" "); %>
         <div class = "container-fluid">
+           <!-- 
+            <% if ( message != '-1' ) { %>
+                <% if (message == '1') { %>
+                    <div class="alert">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                        <strong>Success!</strong> <%= message %>
+                    </div>
+                <% } %>
+            <% } %>
+            -->
             <div class="row">
                 <h2 class="header" >Welcome <%= fn[0] %></h2> 
                 <br />   
@@ -29,7 +39,7 @@
                 <div id="table-options">
                     <ul class="options-list">
                         <li class="option"><a class="hover-emboss" href="/citizen/logComplaint">Log a Complaint</a></li>
-                        <li class="option"><a class="hover-emboss" href="#">My Complaints</a></li>
+                        <li class="option"><a class="hover-emboss" href="/citizen/complaintList">My Complaints</a></li>
                         <li class="option"><a class="hover-emboss" href="#">Police Station Details</a></li>
                         <li class="option"><a class="hover-emboss" href="#">View Circulars</a></li>
                         <li class="option"><a class="hover-emboss" href="#">My Account</a></li>
