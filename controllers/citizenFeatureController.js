@@ -51,4 +51,11 @@ module.exports = app => {
         //res.render('citizenComplaintList');
     });
 
+    app.get('/citizen/policeStationList', (req,res) => {
+        var sql = "SELECT * from `Police_Station`";
+        db.query(sql, function(err,results) {
+            res.render('citizenPoliceStationList', { policestations: results })
+        });
+    });
+
 };
