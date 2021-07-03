@@ -58,4 +58,41 @@ module.exports = app => {
         });
     });
 
+    app.get('/citizen/myAccount', (req,res) => {
+        var sql = "SELECT * FROM `User` WHERE username = '" + username + "'";
+        db.query(sql, function(err, rows, results) {
+            res.render('citizenMyAccount', { users: rows[0] })
+        });
+    });
+
+    app.post('/citizen/myAccount/edit', urlencodedParser, (req,res) => {
+        var message = '';
+        if(req.method == 'POST') {
+            var post = req.body;
+            var name = post.name;
+            var phone = post.phone;
+            var email = post.email;
+            var dob = post.dob;
+            var address = post.address;
+            var city = post.city;
+            var state = post.state;
+            var country = post.country;
+            var photo= post.photo;
+            var sql = "UPDATE `User` SET `name` = '" + name + "',`phone` = '" + phone + "',`email` = '" + email + "',`dob` = '" + dob + "',`address` = '" + address + "',`city` = '" + city + "',`state` = '" + state + "',`country` = '" + country + "',`photo_file` = '" + photo + "'  WHERE username = '" + username + "'";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message = '0';
+                    throw err;
+                }
+                else {
+                  message = '1';
+                }
+                res.redirect('/citDashboard/'+username);
+             });
+        }
+        else {
+            res.redirect('/citizen/myAccount');
+        }
+    });
+
 };
