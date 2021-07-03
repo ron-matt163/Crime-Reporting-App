@@ -1,13 +1,15 @@
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
-var message = -1;
+var message = "Login Successful";
 module.exports = app => {
+
     app.get('/citDashboard/:username',(req,res) => {
         res.render('citizenDashboard', { message: message });
         username=req.params.username;
     });
 
     app.get('/citizen/logComplaint',(req,res) => {
+        message = '';
         var sql = "SELECT * FROM `Police_Station`";
         db.query(sql, function(err,results) {
             res.render('citizenLogComplaint', { dropdownVals: results })
@@ -16,7 +18,7 @@ module.exports = app => {
 
 
     app.post('/citizen/logComplaint',urlencodedParser,(req,res) => {
-        var message = '';
+        message = '';
         if(req.method == 'POST') {
             var post = req.body;
             var type = post.type;
@@ -33,7 +35,7 @@ module.exports = app => {
                     throw err;
                 }
                 else {
-                  message = '1';
+                  message = 'Your complaint has been submitted.';
                 }
                 res.redirect('/citDashboard/'+username);
              });
@@ -44,6 +46,7 @@ module.exports = app => {
     });
 
     app.get('/citizen/complaintList', (req,res) => {
+        message = '';
         var sql = "SELECT username,type,title,P.name,address,details,status from `Complaint` C, `Police_Station` P WHERE P.id = C.police_station_id AND username = '" + username + "'";
         db.query(sql, function(err,results) {
             res.render('citizenComplaintList', { complaints: results })
@@ -52,6 +55,7 @@ module.exports = app => {
     });
 
     app.get('/citizen/policeStationList', (req,res) => {
+        message = '';
         var sql = "SELECT * from `Police_Station`";
         db.query(sql, function(err,results) {
             res.render('citizenPoliceStationList', { policestations: results })
@@ -59,6 +63,7 @@ module.exports = app => {
     });
 
     app.get('/citizen/myAccount', (req,res) => {
+        message = '';
         var sql = "SELECT * FROM `User` WHERE username = '" + username + "'";
         db.query(sql, function(err, rows, results) {
             res.render('citizenMyAccount', { users: rows[0] })
@@ -66,6 +71,7 @@ module.exports = app => {
     });
 
     app.post('/citizen/myAccount/edit', urlencodedParser, (req,res) => {
+        message = '';
         var message = '';
         if(req.method == 'POST') {
             var post = req.body;
@@ -85,7 +91,7 @@ module.exports = app => {
                     throw err;
                 }
                 else {
-                  message = '1';
+                  message = 'Your account details have been updated';
                 }
                 res.redirect('/citDashboard/'+username);
              });

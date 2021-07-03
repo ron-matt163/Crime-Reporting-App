@@ -32,14 +32,28 @@
             tr:nth-child(even) {
                 background-color: #dddddd;
             }
-
-        </style> 
+        </style>
+        <script>
+            function showDetails(i,n) {
+                i = i.toString();
+                console.log(i);
+                console.log(n);
+                for(var j=0; j<n; j++) {
+                    document.getElementById(j.toString()).style.display = "none";
+                }
+                document.getElementById(i).style.display = "block";
+            }
+            function hideDetails(i) {
+                i = i.toString();
+                document.getElementById(i).style.display = "none";
+            }
+        </script>
     </head>
     <body>
         <%- include ('partials/loginNav') -%>
         <div class="container-fluid" style="align-content: center; width: 60%">
-            <div class="row" style="margin-top: 15px;">
-                <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">My Complaints</h2>
+            <div class="row" style="margin-top: 15px">
+                <h2 class="header" style="font-size: 50px; margin-bottom: 50px">My Complaints</h2>
             </div>
             <table>
                 <tr>
@@ -47,18 +61,33 @@
                   <th>Title</th>
                   <th>Police Station</th>
                   <th>Address</th>
-                  <th>details</th>
+                  <th>Details</th>
                   <th>Status</th>
                 </tr>
                 <% for ( const i in complaints ) { %>
+                    <% n = complaints.length %>
                     <tr>
                         <td><%= complaints[i].type %></td>
                         <td><%= complaints[i].title %></td>
                         <td><%= complaints[i].name %></td>
-                        <td><%= complaints[i].address %></td>
-                        <td><%= complaints[i].details %></td>
+                        <td><%= complaints[i].address %></td>;
+                        <td><a style="color:navy" onclick="showDetails(<%= i %>,<%= n %>)">View Details</a></td>
+                        <div class="modal-dialog" id="<%= i %>" style="display: none;">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Details of the crime: <%= complaints[i].title %></h5>
+                                <button type="button" class="btn-close" onclick="hideDetails(<%= i %>)"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><%= complaints[i].details %></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="hideDetails(<%= i %>)">Close</button>
+                            </div>
+                            </div>
+                        </div>
                         <td><%= complaints[i].status %></td>
-                      </tr>
+                    </tr>
                 <% } %>
                 </table>
         </div>

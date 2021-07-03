@@ -20,16 +20,9 @@
         <%- include ('partials/loginNav') -%>
         <% var fn = user.name.split(" "); %>
         <div class = "container-fluid">
-           <!-- 
-            <% if ( message != '-1' ) { %>
-                <% if (message == '1') { %>
-                    <div class="alert">
-                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                        <strong>Success!</strong> <%= message %>
-                    </div>
-                <% } %>
+            <% if (message.length > 0) { %>
+                <div class="alert alert-success col-sm-12" style="width: 80%; text-align: center; font-size: 140%; margin-left: 10%;"><%= message %></div>
             <% } %>
-            -->
             <div class="row">
                 <h2 class="header" >Welcome <%= fn[0] %></h2> 
                 <br />   

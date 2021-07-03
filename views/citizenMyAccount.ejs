@@ -35,11 +35,29 @@
                         x[i].style.display = "none";
                     }
                 }
-            }    
+            }
+            function dateFixer(d1) {
+                var mnths = {
+                    Jan: "01",
+                    Feb: "02",
+                    Mar: "03",
+                    Apr: "04",
+                    May: "05",
+                    Jun: "06",
+                    Jul: "07",
+                    Aug: "08",
+                    Sep: "09",
+                    Oct: "10",
+                    Nov: "11",
+                    Dec: "12"
+                    },
+                date = d1.split(" ");
+                document.getElementById("dob").value = [date[3], mnths[date[1]], date[2]].join("-");
+            }
         </script>
         <title>VERITAS - My Accounts</title>
     </head>
-    <body>
+    <body onload="dateFixer('<%= users.dob %>')">
         <%- include ('partials/nav') -%>
         <div class="container-fluid" style="align-content: center; width: 60%">
             <div class="row" style="margin-top: 15px;">
@@ -65,7 +83,7 @@
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">Date of Birth<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8 reqinput" type="date" name="dob" required="" value="<%= users.dob %>">
+                        <input class="col-sm-8 reqinput" id="dob" type="date" name="dob" required="">
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
