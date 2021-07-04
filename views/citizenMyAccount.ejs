@@ -54,6 +54,9 @@
                 date = d1.split(" ");
                 document.getElementById("dob").value = [date[3], mnths[date[1]], date[2]].join("-");
             }
+            function goBack() {
+                window.history.back();
+            }
         </script>
         <title>VERITAS - My Accounts</title>
     </head>
@@ -65,6 +68,9 @@
             </div>
             <div class="row formrow">
                 <form method="POST" action="/citizen/myAccount/edit" style="margin-left: 17.5%;">
+                    <div class="row rowform">
+                        <a onclick="goBack()" style = "padding-left: 695px; text-decoration: underline; color:navy">Go Back</a>
+                    </div>
                     <div class="row rowform">
                         <label class="col-sm-4">Name<span style="color: red; font-size: small; margin: 5px;">*</span></label>
                         <input class="col-sm-8 reqinput" type="text" name="name" required="" value="<%= users.name %>">
