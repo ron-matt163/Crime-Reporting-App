@@ -1,6 +1,6 @@
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
-var message = "Login Successful";
+message = "Login Successful";
 module.exports = app => {
 
     app.get('/citDashboard/:username',(req,res) => {

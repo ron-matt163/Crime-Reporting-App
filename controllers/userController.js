@@ -20,6 +20,7 @@ module.exports = app => {
                  console.log(results[0].name);
                  global.user = results[0];
                  username = user.username;
+                 message = "Login Successful"
                  res.redirect('/citDashboard/'+username);
               }
               else{

@@ -42,6 +42,7 @@ app.use(session({
     cookie: { maxAge: 60000 }
     }));
 
+global.message = "";
 
 //fire controllers
 userController(app);
