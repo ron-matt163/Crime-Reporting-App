@@ -32,8 +32,12 @@
             tr:nth-child(even) {
                 background-color: #dddddd;
             }
-
         </style> 
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+        </script>
     </head>
     <body>
         <%- include ('partials/loginNav') -%>
@@ -41,6 +45,10 @@
             <div class="row" style="margin-top: 15px;">
                 <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Police Stations</h2>
             </div>
+            <div class="row rowform">
+                <a onclick="goBack()" style = "padding-left: 1000px; text-decoration: underline; color:navy">Go Back</a>
+            </div>
+            <br>
             <table>
                 <tr>
                   <th>Name</th>
