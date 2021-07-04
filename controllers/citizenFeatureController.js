@@ -72,7 +72,6 @@ module.exports = app => {
 
     app.post('/citizen/myAccount/edit', urlencodedParser, (req,res) => {
         message = '';
-        var message = '';
         if(req.method == 'POST') {
             var post = req.body;
             var name = post.name;
@@ -101,4 +100,29 @@ module.exports = app => {
         }
     });
 
+    app.get('/citizen/changePassword',(req,res) => { 
+        res.render('changePassword');
+    });
+    
+    app.post('/citizen/changePassword',urlencodedParser,(req,res) => { 
+        message = '';
+        if(req.method == 'POST') {
+            var post = req.body;
+            var confpassword = post.confPassword;
+            var sql = "UPDATE `User` SET `password` = '" + confpassword + "'  WHERE username = '" + username + "'";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message = '0';
+                    throw err;
+                }
+                else {
+                  message = 'Your password was changed.';
+                }
+                res.redirect('/citDashboard/'+username);
+             });
+        }
+        else {
+            res.redirect('/citizen/changePassword');
+        }
+    });
 };
