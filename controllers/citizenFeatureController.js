@@ -125,4 +125,39 @@ module.exports = app => {
             res.redirect('/citizen/changePassword');
         }
     });
+
+    app.get('/citizen/feedback', (req,res) => {
+        message = '';
+        var sql = "SELECT * FROM `User` WHERE username = '" + username + "'";
+        db.query(sql, function(err, rows, results) {
+            res.render('citizenFeedback', { users: rows[0] })
+        });
+    });
+
+    app.post('/citizen/feedback',urlencodedParser,(req,res) => {
+        message = '';
+        if(req.method == 'POST') {
+            var post = req.body;
+            var name = post.name;
+            var company = post.company;
+            var email = post.email;
+            var phone = post.phone;
+            var feedback = post.feedback;
+
+            var sql = "INSERT INTO `Feedback` (`name`,`company`,`email`,`phone`,`message`) VALUES ( '" + name + "', '" + company + "', '" + email + "', '" + phone+ "', '" + feedback + "')";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message = '0';
+                    throw err;
+                }
+                else {
+                    message = 'Thank you for your feedback!';
+                }
+                res.redirect('/citDashboard/'+username);
+             });
+        }
+        else {
+            res.redirect('/citizen/feedback');
+        }
+    });
 };
