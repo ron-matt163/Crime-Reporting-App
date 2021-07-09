@@ -46,48 +46,42 @@
         <div class="container-fluid" style="align-content: center; width: 60%">
             
             <div class="row" style="margin-top: 15px;">
-                <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Log a Complaint</h2>
+                <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Submit Feedback</h2>
             </div>
 
             <div class="row formrow">
-                <form method="POST" action="/citizen/logComplaint" style="margin-left: 17.5%;">
+                <form method="POST" action="/citizen/feedback" style="margin-left: 17.5%;">
                     <div class="row rowform">
                         <a onclick="goBack()" style = "padding-left: 695px; text-decoration: underline; color:navy">Go Back</a>
                     </div>
                     <div class="row rowform">
-                        <label class="col-sm-4">Type<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8 reqinput" type="text" name="type" required="">
+                        <label class="col-sm-4">Name<span style="color: red; font-size: small; margin: 5px;">*</span></label>
+                        <input class="col-sm-8 reqinput" type="text" name="name" required="" value="<%= users.name %>">
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
-                        <label class="col-sm-4">Title<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8 reqinput" type="text" name="title" required="">
+                        <label class="col-sm-4">Company<span style="color: red; font-size: small; margin: 5px;">*</span></label>
+                        <input class="col-sm-8 reqinput" type="text" name="company" required="">
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
-                        <label class="col-sm-4">Police Station<span style="color: red; font-size: small; margin: 5px;">*</span></label><br />
-                        <select class="col-sm-8 reqinput" name="policeStation" style="width: 67%; height: 24px; margin: 5px; margin-left: 30px;" required="">
-                            <% for (const i in dropdownVals) { %>
-                                <option value="<%= dropdownVals[i].id %>"> <%= dropdownVals[i].name %> </option>
-                            <% } %>
-                        </select>
+                        <label class="col-sm-4">Email<span style="color: red; font-size: small; margin: 5px;">*</span></label>
+                        <input class="col-sm-8 reqinput" type="text" name="email" required="" value="<%= users.email %>" >
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
-                        <label class="col-sm-4">Address<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8 reqinput" type="text" name="address" required="">
+                        <label class="col-sm-4">Phone<span style="color: red; font-size: small; margin: 5px;">*</span></label>
+                        <input class="col-sm-8 reqinput" type="text" name="phone" required="" value="<%= users.phone %>">
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
-                        <label class="col-sm-4">Details<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <textarea class="col-sm-8 reqinput" type="text" name="details" style="height: 150px; width: 67%; margin: 5px; margin-left: 30px;" required=""></textarea>
+                        <label class="col-sm-4">Message<span style="color: red; font-size: small; margin: 5px;">*</span></label>
+                        <textarea class="col-sm-8 reqinput" type="text" name="feedback" style="height: 150px; width: 67%; margin: 5px; margin-left: 30px;" required=""></textarea>
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
-
                     <button type="submit" style="margin-top: 15px;" onclick="myFunction()">Submit</button>
                 </form>
             </div>
         </div>
     </body>
-
 </html>
