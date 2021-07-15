@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <%- include ('partials/head') -%>
+        <link type="text/css" rel="stylesheet" href="magiczoomplus/magiczoomplus.css"/>
+        <script type="text/javascript" src="magiczoomplus/magiczoomplus.js"></script>
+        <style>
+            .container-fluid {
+                width: 70%
+            }
+            .hover-emboss {
+                color: lightskyblue;
+                text-decoration: none;
+            }
+            .hover-emboss:hover {
+                font-size: 120%;
+            }
+            .alert {
+            padding: 20px;
+            background-color: #04AA6D;
+            color: white;
+            }
+
+            .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            }
+
+            .closebtn:hover {
+            color: black;
+            }
+        </style>        
+    </head>
+    <body>
+        <%- include ('partials/loginNav') -%>
+        <% var fn = user.name.split(" "); %>
+        <div class = "container-fluid">
+            <% if (message.length > 0) { %>
+                <!-- <div class="alert alert-success col-sm-12" style="width: 80%; text-align: center; font-size: 140%; margin-left: 10%;"><%= message %></div> -->
+                <div class="alert">
+                    <strong>Success!</strong> <%= message %>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                </div>
+            <% } %>
+            <div class="row">
+                <h2 class="header" >Welcome <%= fn[0] %></h2> 
+                <br />   
+                <h4 style="margin-top: 30px; margin-bottom: 20px;">Account Type: <strong>Administrator</strong></h4> 
+            </div>
+            <div class="row">
+                <div id="table-options">
+                    <ul class="options-list">
+                        <li class="option"><a class="hover-emboss" href="#">Add Police Officers</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Add Crime Details</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Add Criminal</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Add Court</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Add Prison</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Add Police Station</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Add Category</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Add Circulars</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Add Court Type</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Police Report</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Crime Report</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Criminal Report</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Court Report</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Prison Report</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Category Report</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">Court Type Report</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">All Police Stations</a></li>
+                        <li class="option"><a class="hover-emboss" href="#">View Circulars</a></li>
+                        <li class="option"><a class="hover-emboss" href="/admin/changePassword">Change Password</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>    
+    </body>
+</html>
