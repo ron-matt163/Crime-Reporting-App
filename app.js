@@ -19,7 +19,8 @@ var connection = mysql.createConnection({
     host     : 'localhost',
     user     : 'root',
     password : '',
-    database : 'ocrs'
+    database : 'ocrs',
+    multipleStatements: true
 });
 
 try {

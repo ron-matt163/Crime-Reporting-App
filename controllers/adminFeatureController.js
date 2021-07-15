@@ -82,20 +82,55 @@ module.exports = app => {
         }
     });
 
-    // app.get('/admin/addCrimeDetails',(req,res) => {
-    //     message = '';
-    //     var sql = "SELECT * FROM `Criminal`";
-    //     var criminals;
-    //     var courts;
-    //     db.query(sql, function(err,results) {
-    //         criminals = results;
-    //     });
-    //     var sql = "SELECT * FROM `Court`";
-    //     db.query(sql, function(err,results) {
-    //         courts = results;
-    //     });
-    //     res.render('adminAddCrimeDetails',{criminals:criminals},{courts:courts});
-    // });
+    app.get('/admin/addCrimeDetails',(req,res) => {
+        message = '';
+        var sql = "SELECT * FROM `Criminal`;SELECT * FROM `Court`;SELECT * FROM Crime_Category;";
+        db.query(sql, function(err,results) {
+            if(err) throw err;
+            var criminals = results[0];
+            var courts = results[1];
+            var categories = results[2];
+            res.render('adminAddCrimeDetails',{criminals:criminals,courts:courts,categories:categories});
+        });
+    });
+
+    app.post('/admin/addCrimeDetails',urlencodedParser,(req,res) => { 
+        message = '';
+        if(req.method == 'POST') {
+            var post = req.body;
+            var criminal_id = post.criminal;
+            var category = post.category;
+            var court_id = post.court;
+            var date = post.date;
+            var place= post.place;
+            var description= post.description;
+            var file= post.file;
+            var crime_id;
+            var sql = "INSERT INTO `Crime`(`category`,`court_id`,`date`,`description`,`photo_file`,`place`) VALUES ('" + category + "','" + court_id + "','" + date + "','" + description + "','" + file + "','" + place + "');";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message = '';
+                    throw err;
+                }
+                crime_id = result.insertId;
+                var sql1 = "INSERT INTO `Crime_Criminal` VALUES ('"+crime_id+"','"+criminal_id+"');";
+                db.query(sql1,function(err,result) {
+                    if(err) {
+                        message = '';
+                        throw err;
+                    }
+                    else {
+                        message = 'Crime details added successfully';
+                    }
+                });
+                message = 'Crime details added successfully';
+                res.redirect('/adminDashboard/'+username);                
+            });
+        }
+        else {
+            res.redirect('/admin/addCrimeDetails');
+        }
+    });
 
     app.get('/admin/addCriminal',(req,res) => {
         message = '';
