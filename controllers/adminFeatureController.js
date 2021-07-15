@@ -262,7 +262,33 @@ module.exports = app => {
         }
     });
 
-
+    app.get('/admin/addCourtType',(req,res) => {
+        message = '';
+        res.render('adminCourtTypeForm');
+    });  
+    
+    app.post('/admin/addCourtType',urlencodedParser,(req,res) => { 
+        message = '';
+        if(req.method == 'POST') {
+            var post = req.body;
+            var courttype = post.courtType;
+            var description = post.description;
+            var sql = "INSERT INTO `Court_Type`(`type`,`description`) VALUES ('" + courttype + "','" + description + "')";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message = '0';
+                    throw err;
+                }
+                else {
+                  message = 'New court type has been added.';
+                }
+                res.redirect('/adminDashboard/'+username);
+             });
+        }
+        else {
+            res.redirect('/admin/addCourtType');
+        }
+    });
 
 
 };
