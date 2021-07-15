@@ -53,7 +53,7 @@ module.exports = app => {
         if(req.method == 'POST') {
             var post = req.body;
             var name = post.name;
-            var username= post.username;
+            var uname= post.username;
             var password= post.password;
             var confPassword= post.confPassword;
             var phone= post.phone;
@@ -65,7 +65,7 @@ module.exports = app => {
             var country= post.country;
             var photo= post.photo;
             var type= "Police";
-            var sql = "INSERT INTO `User`(`name`,`username`,`password`,`phone`,`email`,`dob`,`address`,`city`,`state`,`country`,`photo_file`,`type`) VALUES ('" + name + "','" + username + "','" + password + "','" + phone + "','" + email + "','" + dob + "','" + address + "','" + city + "','" + state + "','" + country + "','" + photo + "','" + type + "')";
+            var sql = "INSERT INTO `User`(`name`,`username`,`password`,`phone`,`email`,`dob`,`address`,`city`,`state`,`country`,`photo_file`,`type`) VALUES ('" + name + "','" + uname + "','" + password + "','" + phone + "','" + email + "','" + dob + "','" + address + "','" + city + "','" + state + "','" + country + "','" + photo + "','" + type + "')";
             var query = db.query(sql, function(err, result) {
                 if (err) {
                     message = '0';
@@ -171,6 +171,97 @@ module.exports = app => {
             res.redirect('/admin/addCourt');
         }
     });
+
+    app.get('/admin/addPrison',(req,res) => {
+        message = '';
+        res.render('adminPrisonForm');
+    });
+
+    app.post('/admin/addPrison',urlencodedParser,(req,res) => { 
+        message = '';
+        if(req.method == 'POST') {
+            var post = req.body;
+            var prisonname = post.prisonName;
+            var prisontype = post.prisonType;
+            var address = post.address;
+            var city = post.city;
+            var sql = "INSERT INTO `Prison`(`name`,`type`,`address`,`city`) VALUES ('" + prisonname + "','" + prisontype + "','" + address + "','" + city + "')";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message = '0';
+                    throw err;
+                }
+                else {
+                  message = 'New prison has been added.';
+                }
+                res.redirect('/adminDashboard/'+username);
+             });
+        }
+        else {
+            res.redirect('/admin/addPrison');
+        }
+    });
+
+    app.get('/admin/addPoliceStation',(req,res) => {
+        message = '';
+        res.render('adminPoliceStationForm');
+    });
+
+    app.post('/admin/addPoliceStation',urlencodedParser,(req,res) => { 
+        message = '';
+        if(req.method == 'POST') {
+            var post = req.body;
+            var stationname = post.stationName;
+            var phone = post.phone;
+            var email = post.email;
+            var address = post.address;
+            var city = post.city;
+            var state = post.state;
+            var sql = "INSERT INTO `Police_Station`(`name`,`email`,`state`,`phone`,`address`,`city`) VALUES ('" + stationname + "','" + email + "','" + state + "','" + phone + "','" + address + "','" + city + "')";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message = '0';
+                    throw err;
+                }
+                else {
+                  message = 'New police station has been added.';
+                }
+                res.redirect('/adminDashboard/'+username);
+             });
+        }
+        else {
+            res.redirect('/admin/addPoliceStation');
+        }
+    });
+
+    app.get('/admin/addCrimeCategory',(req,res) => {
+        message = '';
+        res.render('adminCrimeCategoryForm');
+    });
+
+    app.post('/admin/addCrimeCategory',urlencodedParser,(req,res) => { 
+        message = '';
+        if(req.method == 'POST') {
+            var post = req.body;
+            var categoryname = post.categoryName;
+            var description = post.description;
+            var sql = "INSERT INTO `Crime_Category`(`category`,`description`) VALUES ('" + categoryname + "','" + description + "')";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message = '0';
+                    throw err;
+                }
+                else {
+                  message = 'New crime category has been added.';
+                }
+                res.redirect('/adminDashboard/'+username);
+             });
+        }
+        else {
+            res.redirect('/admin/addCrimeCategory');
+        }
+    });
+
 
 
 
