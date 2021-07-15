@@ -13,7 +13,7 @@ module.exports = app => {
            var username= post.username;
            var password= post.password;
           
-           var sql="SELECT name, username FROM `User` WHERE `username`='"+username+"' and password = '"+password+"'";                           
+           var sql="SELECT name, username, type FROM `User` WHERE `username`='"+username+"' and password = '"+password+"'";                           
            db.query(sql, function(err, results){      
               if(results.length){
                  req.session.user = results[0];
@@ -21,7 +21,15 @@ module.exports = app => {
                  global.user = results[0];
                  username = user.username;
                  message = "Login Successful"
-                 res.redirect('/citDashboard/'+username);
+                 if(results[0].type==='Citizen') {
+                    res.redirect('/citDashboard/'+username);
+                 }
+                 else if(results[0].type==='Admin') {
+                    res.redirect('/adminDashboard/'+username);
+                 }
+                 else if(results[0].type==='Police') {
+                    res.redirect('/policeDashboard')
+                 }
               }
               else{
                  message = 'Wrong Credentials.';

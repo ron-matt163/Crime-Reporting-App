@@ -13,6 +13,7 @@ var citizenFeatureController = require('./controllers/citizenFeatureController')
 var app = express();
 //set up template engine
 var mysql = require('mysql');
+const adminFeatureController = require('./controllers/adminFeatureController');
 
 var connection = mysql.createConnection({
     host     : 'localhost',
@@ -47,6 +48,7 @@ global.message = "";
 //fire controllers
 userController(app);
 citizenFeatureController(app);
+adminFeatureController(app);
 
 app.get('/about',(req,res) => {
     res.render('about');
