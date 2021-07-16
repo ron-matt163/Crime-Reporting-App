@@ -2,6 +2,7 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 message = "Login Successful";
 var message1 = "";
+
 module.exports = app => {
 
     app.get('/adminDashboard/:username',(req,res) => {
@@ -15,6 +16,33 @@ module.exports = app => {
         db.query(sql, function(err,results) {
             res.render('adminPoliceStationList', { policestations: results })
         });
+    });
+
+    app.get('/admin/addCirculars',(req,res) => {
+        message = '';
+        res.render('adminCircularForm.ejs');
+    });
+
+    app.post('/admin/addCirculars',upload.single("file"),(req,res) => { 
+        message = '';
+        console.log(req.file);
+        if(req.method == 'POST') {
+            var post = req.body;
+            var title = post.title;
+            var description = post.description;
+            var filename  = req.file.filename;
+            var sql= "INSERT INTO `Article`(`title`,`filename`,`description`)  VALUES ('" + title + "','" + filename + "','" + description + "')";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message = '';
+                    throw err;
+                }
+                else {
+                  message = 'Circular was published successfully';
+                }
+                res.redirect('/adminDashboard/'+username);
+             });
+        }
     });
 
 
@@ -330,7 +358,13 @@ module.exports = app => {
         message = '';
         var sql = "SELECT * FROM `User` WHERE type = 'Police'";
         db.query(sql, function(err, rows, results) {
-            res.render('adminPoliceReport', { police: rows, message: message1 })
+            for(i=0;i<rows.length;i++) {
+                date = rows[i].dob.toString().split(" ");
+                rows[i].dob = [date[1], date[2], date[3]].join(" ");
+                console.log(rows[i].dob);
+            }
+            res.render('adminPoliceReport', { police: rows, message: message1 });
+            message1 = '';
         });
     });
 

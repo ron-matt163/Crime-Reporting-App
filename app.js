@@ -1,6 +1,7 @@
 var express = require('express');
 //var routes = require('./routes');
 //var user = require('./routes/user');
+var multer = require('multer');
 var http = require('http');
 var path = require('path');
 
@@ -36,6 +37,18 @@ app.set('view engine','ejs');
 
 //static files
 app.use(express.static('./public'));
+
+const fileStorageEngine = multer.diskStorage({
+    destination: (req,file,cb) => {
+        cb(null, path.join(__dirname, '/public/uploads/'));
+    },
+    filename: (req,file,cb) => {
+        cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+    });
+
+const upload = multer({storage: fileStorageEngine});
+global.upload = upload;
 
 app.use(session({
     secret: 'keyboard cat',
