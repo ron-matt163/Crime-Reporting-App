@@ -1,0 +1,101 @@
+<html>
+    <head>
+        <%- include ('partials/head') -%>      
+        <style>
+            .container-fluid {
+                margin-top: 5%;
+                margin-bottom: 5%;
+                border:black; 
+                border-width:1px; 
+                border-style:solid;
+                border-radius: 25px;
+                background-color: lightblue;
+                color: black;
+            }
+            table {
+                margin-bottom: 2.5%;
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+                border-radius: 25px;
+                border-color: rgb(14, 14, 99);
+
+            }
+
+            td, th {
+                border: 1px solid grey;  
+                text-align: left;
+                padding: 8px;
+                color: black;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+            .alert {
+            padding: 20px;
+            background-color: #04AA6D;
+            color: white;
+            }
+
+            .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            }
+
+            .closebtn:hover {
+            color: black;
+            }
+        </style> 
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+        </script>
+    </head>
+    <body>
+        <%- include ('partials/loginNav') -%>
+        <div class="container-fluid" style="align-content: center; width: 60%">
+            <% if (message.length > 0) { %>
+                <!-- <div class="alert alert-success col-sm-12" style="width: 80%; text-align: center; font-size: 140%; margin-left: 10%;"><%= message %></div> -->
+                <div class="alert" style="margin-top: 15px; width: 80%; margin-left: 10%;">
+                    <strong>Success!</strong> <%= message %>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                </div>
+            <% } %>
+            <div class="row" style="margin-top: 15px;">
+                <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Crime Category Report</h2>
+            </div>
+            <div class="row rowform">
+                <a href="/adminDashboard/<%= username %>" style = "padding-left: 1000px; text-decoration: underline; color:navy">Go Back</a>
+            </div>
+            <br>
+            <table>
+                <tr>
+                  <th>Category</th>
+                  <th>Description</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </tr>
+                <% for ( const i in crime ) { %>
+                    <tr>
+                        <td><%= crime[i].category%></td>
+                        <td><%= crime[i].description %></td>
+                        <td>
+                            <a href="/admin/crimeCategoryReport/edit/<%= crime[i].category %>" class="btn btn-info btn-sm">Edit</a>
+                        </td>
+                        <td>
+                            <a href="/admin/crimeCategoryReport/delete/<%= crime[i].category %>" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                      </tr>
+                <% } %>
+                </table>
+        </div>
+    </body>
+</html>

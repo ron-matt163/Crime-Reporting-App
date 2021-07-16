@@ -100,6 +100,14 @@ module.exports = app => {
         }
     });
 
+    app.get('/citizen/viewCirculars',(req,res) => {
+        message = '';
+        var sql = "SELECT * FROM `Article`";
+        db.query(sql, function(err, rows, results) {
+            res.render('citizenViewCircular', { circulars: rows });
+        });
+    });
+
     app.get('/citizen/changePassword',(req,res) => { 
         res.render('changePassword');
     });
