@@ -1,6 +1,7 @@
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 message = "Login Successful";
+var message1 = "";
 module.exports = app => {
 
     app.get('/adminDashboard/:username',(req,res) => {
@@ -329,7 +330,7 @@ module.exports = app => {
         message = '';
         var sql = "SELECT * FROM `User` WHERE type = 'Police'";
         db.query(sql, function(err, rows, results) {
-            res.render('adminPoliceReport', { police: rows })
+            res.render('adminPoliceReport', { police: rows, message: message1 })
         });
     });
 
@@ -339,12 +340,13 @@ module.exports = app => {
         var sql = "DELETE FROM `User` WHERE username = '" + usern + "'";
         var query = db.query(sql, function(err, result) {
             if (err) {
-                message = '0';
+                message1 = '';
                 throw err;
             }
             else {
-                message = 'Record deleted.'
+                message1 = 'Record deleted.'
             }
+
             res.redirect('/admin/policeReport');
         });
     });
@@ -375,11 +377,11 @@ module.exports = app => {
             var sql = "UPDATE `User` SET `name` = '" + name + "',`phone` = '" + phone + "',`email` = '" + email + "',`dob` = '" + dob + "',`address` = '" + address + "',`city` = '" + city + "',`state` = '" + state + "',`country` = '" + country + "',`photo_file` = '" + photo + "'  WHERE username = '" + usern + "'";
             var query = db.query(sql, function(err, result) {
                 if (err) {
-                    message = '0';
+                    message1 = '';
                     throw err;
                 }
                 else {
-                  message = 'Police record has been updated';
+                  message1 = 'Police record has been updated';
                 }
                 res.redirect('/admin/policeReport');
              });
