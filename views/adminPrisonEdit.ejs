@@ -22,7 +22,7 @@
                 margin-left: 15px;
             }
         </style>
-        <script>
+        <script type="text/javascript">
             function myFunction() {
                 var x = document.getElementsByClassName("errmsg");
                 var y = document.getElementsByClassName("reqinput")
@@ -36,45 +36,63 @@
                     }
                 }
             }
+            function dateFixer(d1) {
+                var mnths = {
+                    Jan: "01",
+                    Feb: "02",
+                    Mar: "03",
+                    Apr: "04",
+                    May: "05",
+                    Jun: "06",
+                    Jul: "07",
+                    Aug: "08",
+                    Sep: "09",
+                    Oct: "10",
+                    Nov: "11",
+                    Dec: "12"
+                    },
+                date = d1.split(" ");
+                document.getElementById("dob").value = [date[3], mnths[date[1]], date[2]].join("-");
+            }
             function goBack() {
                 window.history.back();
             }
         </script>
-        <title>VERITAS - Add Prison</title>
+        <title>VERITAS - My Accounts</title>
     </head>
     <body>
         <%- include ('partials/loginNav') -%>
         <div class="container-fluid" style="align-content: center; width: 60%">
             <div class="row" style="margin-top: 15px;">
-                <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Add Prison</h2>
+                <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Modify Prison Records</h2>
             </div>
             <div class="row formrow">
-                <form method="POST" action="/admin/addPrison" style="margin-left: 17.5%;">
+                <form method="POST" action="/admin/prisonReport/edit/<%= prisons.id %>" style="margin-left: 17.5%;">
                     <div class="row rowform">
                         <a onclick="goBack()" style = "padding-left: 695px; text-decoration: underline; color:navy">Go Back</a>
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">Prison Name<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8 reqinput" type="text" name="prisonName" required="">
+                        <input class="col-sm-8 reqinput" type="text" name="prisonName" required="" value="<%= prisons.name %>">
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
                     <div class="row rowform">
                         <label class="col-sm-4">Prison Type<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8 reqinput" type="text" name="prisonType" required="">
+                        <input class="col-sm-8 reqinput" type="text" name="prisonType" required="" value="<%= prisons.type %>">
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">Address<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8 reqinput" type="text" name="address" required="">
+                        <input class="col-sm-8 reqinput" type="address" name="address" required="" value="<%= prisons.address %>">
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
                         <label class="col-sm-4">City<span style="color: red; font-size: small; margin: 5px;">*</span></label>
-                        <input class="col-sm-8 reqinput" type="text" name="city" required="">
+                        <input class="col-sm-8 reqinput" type="text" name="city" required="" value="<%= prisons.city %>">
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
-                    <button type="submit" style="margin-top: 15px; width: 175px;" onclick="myFunction()">Submit</button>
+                    <button type="submit" style="margin-top: 15px; width: 175px;" onclick="myFunction()">Update</button>
                 </form>
             </div>
         </div>
