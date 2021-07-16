@@ -489,6 +489,120 @@ module.exports = app => {
         }
     });
 
+    app.get('/admin/policeStationReport', (req,res) => {
+        message = '';
+        var sql = "SELECT * FROM `Police_Station`";
+        db.query(sql, function(err, rows, results) {
+            res.render('adminPoliceStationReport', { police: rows, message: message1 });
+            message1 = '';
+        });
+    });
+    
+    app.get('/admin/policeStationReport/delete/:id', (req,res) => {
+        message = '';
+        var id = req.params.id;
+        var sql = "DELETE FROM `Police_Station` WHERE id = " + id;
+        var query = db.query(sql, function(err, result) {
+            if (err) {
+                message1 = '';
+                throw err;
+            }
+            else {
+                message1 = 'Record deleted.'
+            }
+    
+            res.redirect('/admin/policeStationReport');
+        });
+    });
+    
+    //Crime category Report
+    
+    app.get('/admin/crimeCategoryReport', (req,res) => {
+        message = '';
+        var sql = "SELECT * FROM `Crime_Category`";
+        db.query(sql, function(err, rows, results) {
+            res.render('adminCrimeCategoryReport', { crime: rows, message: message1 });
+            message1 = '';
+        });
+    });
+    
+    app.get('/admin/crimeCategoryReport/delete/:category', (req,res) => {
+        message = '';
+        var category = req.params.category;
+        var sql = "DELETE FROM `Crime_Category` WHERE category = '" + category+"'";
+        var query = db.query(sql, function(err, result) {
+            if (err) {
+                message1 = '';
+                throw err;
+            }
+            else {
+                message1 = 'Record deleted.'
+            }
+    
+            res.redirect('/admin/crimeCategoryReport');
+        });
+    });
+        
+    // Court Type Report
+    app.get('/admin/courtTypeReport', (req,res) => {
+        message = '';
+        var sql = "SELECT * FROM `Court_Type`";
+        db.query(sql, function(err, rows, results) {
+            res.render('adminCourtTypeReport', { court: rows, message: message1 });
+            message1 = '';
+        });
+    });
+    
+    app.get('/admin/courtTypeReport/delete/:type', (req,res) => {
+        message = '';
+        var type = req.params.type
+        var sql = "DELETE FROM `Court_Type` WHERE type = '" + type+"'" ;
+        var query = db.query(sql, function(err, result) {
+            if (err) {
+                message1 = '';
+                throw err;
+            }
+            else {
+                message1 = 'Record deleted.';
+            }
+    
+            res.redirect('/admin/courtTypeReport');
+        });
+    });
+
+    app.get('/admin/courtTypeReport/edit/:type', (req,res) => {
+        message = '';
+        var type = req.params.type;
+        var sql = "SELECT * FROM `Court_Type` WHERE type = '" + type + "'";
+        db.query(sql, function(err, rows, results) {
+            res.render('adminCourtTypeEdit', { type: rows[0] })
+        });        
+    });
+    
+    app.post('/admin/courtTypeReport/edit/:type',urlencodedParser,(req,res) => { 
+        message = '';
+        var type = req.params.type;
+        if(req.method == 'POST') {
+            var post = req.body;
+            var typenew = post.type;
+            var description = post.description;
+            var sql = "UPDATE `Court_Type` SET  `description` = '" + description+"',`type` = '" + typenew+"' WHERE type = '" + type + "'";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message1 = '';
+                    throw err;
+                }
+                else {
+                  message1 = 'Court Type record has been updated';
+                }
+                res.redirect('/admin/courtTypeReport');
+             });
+        }
+        else {
+            res.redirect('/admin/courtTypeReport/edit/'+usern);
+        }
+    });
+
     app.get('/admin/viewCirculars',(req,res) => {
         message = '';
         var sql = "SELECT * FROM `Article`";
