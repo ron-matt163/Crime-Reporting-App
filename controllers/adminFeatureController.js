@@ -7,6 +7,7 @@ module.exports = app => {
 
     app.get('/adminDashboard/:username',(req,res) => {
         res.render('adminDashboard', { message: message });
+        message='';
         username=req.params.username;
     });
 
@@ -44,6 +45,7 @@ module.exports = app => {
              });
         }
     });
+
 
 
     app.get('/admin/changePassword',(req,res) => { 
@@ -424,4 +426,93 @@ module.exports = app => {
             res.redirect('/admin/policeReport/edit/'+usern);
         }
     });
+
+    app.get('/admin/prisonReport',(req,res) => {
+        message = '';
+        var sql = "SELECT * FROM `Prison`";
+        db.query(sql, function(err, rows, results) {
+            res.render('adminPrisonReport', { prisons: rows, message: message1 });
+            message1 = '';
+        });
+    });
+
+    app.get('/admin/prisonReport/delete/:prison_id', (req,res) => {
+        message = '';
+        var prison_id = req.params.prison_id;
+        var sql = "DELETE FROM `Prison` WHERE id = '" + prison_id + "'";
+        var query = db.query(sql, function(err, result) {
+            if (err) {
+                message1 = '';
+                throw err;
+            }
+            else {
+                message1 = 'Record deleted.';
+            }
+
+            res.redirect('/admin/prisonReport');
+        });
+    });
+
+    app.get('/admin/prisonReport/edit/:prison_id', (req,res) => {
+        message = '';
+        var prison_id = req.params.prison_id;
+        var sql = "SELECT * FROM `Prison` WHERE id = '" + prison_id + "'";
+        db.query(sql, function(err, rows, results) {
+            res.render('adminPrisonEdit', { prisons: rows[0] });
+        });        
+    });
+
+    app.post('/admin/prisonReport/edit/:prison_id',urlencodedParser,(req,res) => { 
+        message = '';
+        var prison_id = req.params.prison_id;
+        if(req.method == 'POST') {
+            var post = req.body;
+            var name = post.prisonName;
+            var type = post.prisonType;
+            var address = post.address;
+            var city = post.city;
+
+            var sql = "UPDATE `Prison` SET `name` = '" + name + "',`type` = '" + type + "',`address` = '" + address + "',`city` = '" + city + "' WHERE id = '" + prison_id + "'";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message1 = '';
+                    throw err;
+                }
+                else {
+                  message1 = 'Prison record has been updated';
+                }
+                res.redirect('/admin/prisonReport');
+             });
+        }
+        else {
+            res.redirect('/admin/prisonReport/edit/'+prison_id);
+        }
+    });
+
+    app.get('/admin/viewCirculars',(req,res) => {
+        message = '';
+        var sql = "SELECT * FROM `Article`";
+        db.query(sql, function(err, rows, results) {
+            res.render('adminViewCircular', { circulars: rows, message: message1 });
+            message1 = '';
+        });
+    });
+    
+    app.get('/admin/viewCirculars/delete/:article_id', (req,res) => {
+        message = '';
+        var article_id = req.params.article_id;
+        var sql = "DELETE FROM `Article` WHERE id = '" + article_id + "'";
+        var query = db.query(sql, function(err, result) {
+            if (err) {
+                message1 = '';
+                throw err;
+            }
+            else {
+                message1 = 'Record deleted.';
+            }
+
+            res.redirect('/admin/viewCirculars');
+        });
+    });
+
 };
