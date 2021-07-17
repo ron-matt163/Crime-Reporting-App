@@ -32,6 +32,26 @@
             tr:nth-child(even) {
                 background-color: #dddddd;
             }
+            .alert {
+            padding: 20px;
+            background-color: #04AA6D;
+            color: white;
+            }
+
+            .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            }
+
+            .closebtn:hover {
+            color: black;
+            }
         </style> 
         <script>
             function goBack() {
@@ -43,7 +63,7 @@
         <%- include ('partials/loginNav') -%>
         <div class="container-fluid" style="align-content: center; width: 60%">
             <div class="row" style="margin-top: 15px;">
-                <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Police Stations</h2>
+                <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Police Report</h2>
             </div>
             <div class="row rowform">
                 <a onclick="goBack()" style = "padding-left: 1000px; text-decoration: underline; color:navy">Go Back</a>
@@ -54,22 +74,25 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Phone</th>
+                  <th>DOB</th>
                   <th>Address</th>
                   <th>City</th>
                   <th>State</th>
+                  <th>Country</th>
                 </tr>
-                <% for ( const i in policestations ) { %>
+                <% for ( const i in police ) { %>
                     <tr>
-                        <td><%= policestations[i].name%></td>
-                        <td><%= policestations[i].email %></td>
-                        <td><%= policestations[i].phone %></td>
-                        <td><%= policestations[i].address %></td>
-                        <td><%= policestations[i].city %></td>
-                        <td><%= policestations[i].state %></td>
+                        <td><%= police[i].name%></td>
+                        <td><%= police[i].email %></td>
+                        <td><%= police[i].phone %></td>
+                        <td style="white-space: nowrap;"><%= police[i].dob%></td>
+                        <td><%= police[i].address %></td>
+                        <td><%= police[i].city %></td>
+                        <td><%= police[i].state%></td>
+                        <td><%= police[i].country %></td>
                       </tr>
                 <% } %>
                 </table>
         </div>
     </body>
-
 </html>
