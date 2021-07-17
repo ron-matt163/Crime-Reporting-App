@@ -88,10 +88,10 @@
                         <td><%= court[i].type%></td>
                         <td><%= court[i].description %></td>
                         <td>
-                            <a href="/admin/courtTypeReport/edit/<%= court[i].type %>" class="btn btn-info btn-sm">Edit</a>
+                            <a href="/admin/courtTypeReport/edit/<%= court[i].type %>/<%= court[i].description %>" class="btn btn-info btn-sm">Edit</a>
                         </td>
                         <td>
-                            <a href="/admin/courtTypeReport/delete/<%= court[i].type %>" class="btn btn-danger btn-sm">Delete</a>
+                            <a href="/admin/courtTypeReport/delete/<%= court[i].type %>/<%= court[i].description %>" class="btn btn-danger btn-sm">Delete</a>
                         </td>
                       </tr>
                 <% } %>

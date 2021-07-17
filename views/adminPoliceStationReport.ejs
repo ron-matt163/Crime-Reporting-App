@@ -73,7 +73,7 @@
                 <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">All Police Stations</h2>
             </div>
             <div class="row rowform">
-                <a onclick="goBack()" style = "padding-left: 1000px; text-decoration: underline; color:navy">Go Back</a>
+                <a href="/adminDashboard/<%= username %>" style = "padding-left: 1000px; text-decoration: underline; color:navy">Go Back</a>
             </div>
             <br>
             <table>
@@ -96,7 +96,7 @@
                         <td><%= police[i].city %></td>
                         <td><%= police[i].state %></td>
                         <td>
-                            <a href="/admin/policeStationReport/edit/<%= police[i].username %>" class="btn btn-info btn-sm">Edit</a>
+                            <a href="/admin/policeStationReport/edit/<%= police[i].id %>" class="btn btn-info btn-sm">Edit</a>
                         </td>
                         <td>
                             <a href="/admin/policeStationReport/delete/<%= police[i].id %>" class="btn btn-danger btn-sm">Delete</a>
