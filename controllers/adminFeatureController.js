@@ -629,4 +629,206 @@ module.exports = app => {
         });
     });
 
+    //Crime Report
+    app.get('/admin/crimeReport', (req,res) => {
+        message = '';
+        var sql = "SELECT A.id, A.category, B.court_name, A.date, A.description, A.place FROM Court B, Crime A WHERE B.id = A.court_id";
+        db.query(sql, function(err, rows, results) {
+            for(i=0;i<rows.length;i++) {
+                date = rows[i].date.toString().split(" ");
+                rows[i].date = [date[1], date[2], date[3]].join(" ");
+                console.log(rows[i].date);
+            }
+            res.render('adminCrimeReport', { crime: rows, message: message1 });
+            message1 = '';          
+        });
+    });
+
+    app.get('/admin/crimeReport/delete/:id', (req,res) => {
+        message = '';
+        var id = req.params.id;
+        var sql = "DELETE FROM `Crime` WHERE id = " + id + "";
+        var query = db.query(sql, function(err, result) {
+            if (err) {
+                message1 = '';
+                throw err;
+            }
+            else {
+                message1 = 'Record deleted.'
+            }
+
+            res.redirect('/admin/crimeReport');
+        });
+    });
+
+    app.get('/admin/crimeReport/edit/:id', (req,res) => {
+        message = '';
+        var id = req.params.id;
+        var sql = "SELECT A.id, A.category, B.court_name, A.date, A.description, A.place FROM Court B, Crime A WHERE B.id = A.court_id AND A.id = " + id + ";SELECT * FROM Court;SELECT * FROM Crime_Category";
+        db.query(sql, function(err, rows, results) {
+            res.render('adminCrimeReportEdit', { crimes: rows[0], courts: rows[1], categories:rows[2] })
+        });        
+    });
+
+    app.post('/admin/crimeReport/edit/:id',urlencodedParser,(req,res) => { 
+        message = '';
+        var id = req.params.id;
+        if(req.method == 'POST') {
+            var post = req.body;
+            var category = post.category;
+            var court = post.court;
+            var date = post.date;
+            var description = post.description;
+            var place = post.place;
+            var sql = "UPDATE `Crime` SET `category` = '" + category + "',`court_id` = " + court + ",`date` = '" + date + "',`description` = '" + description + "',`place` = '" + place + "'  WHERE id = " + id + "";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message1 = '';
+                    throw err;
+                }
+                else {
+                  message1 = 'Crime record has been updated';
+                }
+                res.redirect('/admin/crimeReport');
+             });
+        }
+        else {
+            res.redirect('/admin/crimeReport/edit/'+id);
+        }
+    });
+
+    //Criminal Report
+    app.get('/admin/criminalReport', (req,res) => {
+        message = '';
+        var sql = "SELECT A.id, A.name, A.phone, A.height, A.weight, B.name AS prison, A.email, A.dob, A.address, A.city, A.state, A.country, A.photo_file FROM Criminal A, Prison B where A.prison_id = B.id";
+        db.query(sql, function(err, rows, results) {
+            for(i=0;i<rows.length;i++) {
+                date = rows[i].dob.toString().split(" ");
+                rows[i].dob = [date[1], date[2], date[3]].join(" ");
+                console.log(rows[i].dob);
+            }
+            res.render('adminCriminalReport', { criminal: rows, message: message1 })
+            message1 = '';
+        });
+    });
+
+    app.get('/admin/criminalReport/delete/:id', (req,res) => {
+        message = '';
+        var id = req.params.id;
+        var sql = "DELETE FROM `Criminal` WHERE id = " + id + "";
+        var query = db.query(sql, function(err, result) {
+            if (err) {
+                message1 = '';
+                throw err;
+            }
+            else {
+                message1 = 'Record deleted.'
+            }
+            res.redirect('/admin/criminalReport');
+        });
+    });
+
+    app.get('/admin/criminalReport/edit/:id', (req,res) => {
+        message = '';
+        var id = req.params.id;
+        var sql = "SELECT A.id, A.name, A.phone, A.height, A.weight, B.name AS prison, A.email, A.dob, A.address, A.city, A.state, A.country, A.photo_file FROM Criminal A, Prison B where A.prison_id = B.id AND A.id = " + id + ";SELECT * FROM Prison";
+        db.query(sql, function(err, rows, results) {
+            res.render('adminCriminalReportEdit', { criminals: rows[0], prisons: rows[1] })
+        });        
+    });
+
+    app.post('/admin/criminalReport/edit/:id',urlencodedParser,(req,res) => { 
+        message = '';
+        var id = req.params.id;
+        if(req.method == 'POST') {
+            var post = req.body;
+            var name = post.name;
+            var height = post.height;
+            var weight = post.weight;
+            var prison = post.prison_id;
+            var phone = post.phone;
+            var email = post.email;
+            var dob = post.dob;
+            var address = post.address;
+            var city = post.city;
+            var state = post.state;
+            var country = post.country;
+            var photo_file = post.photo_file;
+            var sql = "UPDATE `Criminal` SET `name` = '" + name + "',`height` = " + height + ",`weight` = '" + weight + "',`prison_id` = '" + prison + "',`phone` = '" + phone + "',`email` = '" + email + "',`dob` = '" + dob + "',`address` = '" + address + "',`city` = '" + city + "',`state` = '" + state + "',`country` = '" + country + "',`photo_file` = '" + photo_file + "' WHERE id = " + id + "";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message1 = '';
+                    throw err;
+                }
+                else {
+                  message1 = 'Criminal record has been updated';
+                }
+                res.redirect('/admin/criminalReport');
+             });
+        }
+        else {
+            res.redirect('/admin/criminalReport/edit/'+id);
+        }
+    });
+
+    //Court Report
+    app.get('/admin/courtReport', (req,res) => {
+        message = '';
+        var sql = "SELECT * FROM Court";
+        db.query(sql, function(err, rows, results) {
+            res.render('adminCourtReport', { court: rows, message: message1 })
+        });
+    });
+
+    app.get('/admin/courtReport/delete/:id', (req,res) => {
+        message = '';
+        var id = req.params.id;
+        var sql = "DELETE FROM `Court` WHERE id = " + id + "";
+        var query = db.query(sql, function(err, result) {
+            if (err) {
+                message1 = '';
+                throw err;
+            }
+            else {
+                message1 = 'Record deleted.'
+            }
+            res.redirect('/admin/courtReport');
+        });
+    });
+
+    app.get('/admin/courtReport/edit/:id', (req,res) => {
+        message = '';
+        var id = req.params.id;
+        var sql = "SELECT * FROM `Court` WHERE id = " + id + "; SELECT * FROM `Court_Type`";
+        db.query(sql, function(err, rows, results) {
+            res.render('adminCourtReportEdit', { courts: rows[0], courttypes: rows[1] })
+        });        
+    });
+
+    app.post('/admin/courtReport/edit/:id',urlencodedParser,(req,res) => { 
+        message = '';
+        var id = req.params.id;
+        if(req.method == 'POST') {
+            var post = req.body;
+            var courtname = post.courtname;
+            var courttype = post.courttype;
+            var address = post.address;
+            var city = post.city;
+            var sql = "UPDATE `Court` SET `court_name` = '" + courtname + "',`court_type` = '" + courttype + "',`address` = '" + address + "',`city` = '" + city + "' WHERE id = " + id + "";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message1 = '';
+                    throw err;
+                }
+                else {
+                  message1 = 'Court record has been updated';
+                }
+                res.redirect('/admin/courtReport');
+             });
+        }
+        else {
+            res.redirect('/admin/courtReport/edit/'+id);
+        }
+    });
+
 };
