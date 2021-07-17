@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <%- include ('partials/head') -%>
+        <link type="text/css" rel="stylesheet" href="magiczoomplus/magiczoomplus.css"/>
+        <script type="text/javascript" src="magiczoomplus/magiczoomplus.js"></script>
+        <style>
+            .container-fluid {
+                width: 70%
+            }
+            .hover-emboss {
+                color: lightskyblue;
+                text-decoration: none;
+            }
+            .hover-emboss:hover {
+                font-size: 120%;
+            }
+            .alert {
+            padding: 20px;
+            background-color: #04AA6D;
+            color: white;
+            }
+
+            .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            }
+
+            .closebtn:hover {
+            color: black;
+            }
+        </style>        
+    </head>
+    <body>
+        <%- include ('partials/loginNav') -%>
+        <% var fn = user.name.split(" "); %>
+        <div class = "container-fluid">
+            <% if (message.length > 0) { %>
+                <!-- <div class="alert alert-success col-sm-12" style="width: 80%; text-align: center; font-size: 140%; margin-left: 10%;"><%= message %></div> -->
+                <div class="alert">
+                    <strong>Success!</strong> <%= message %>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                </div>
+            <% } %>
+            <div class="row">
+                <h2 class="header" >Welcome <%= fn[0] %></h2> 
+                <br />   
+                <h4 style="margin-top: 30px; margin-bottom: 20px;">Account Type: <strong>Police Officer</strong></h4> 
+            </div>
+            <div class="row">
+                <div id="table-options">
+                    <ul class="options-list">
+                        <li class="option"><a class="hover-emboss" href="/police/addCrimeDetails">Add Crime Details</a></li>
+                        <li class="option"><a class="hover-emboss" href="/police/addCriminal">Add Criminal</a></li>
+                        <li class="option"><a class="hover-emboss" href="/police/addCirculars">Add Circulars</a></li>
+                        <li class="option"><a class="hover-emboss" href="/police/crimeReport">Crime Report</a></li>
+                        <li class="option"><a class="hover-emboss" href="/police/criminalReport">Criminal Report</a></li>
+                        <li class="option"><a class="hover-emboss" href="/police/courtReport">Court Report</a></li>
+                        <li class="option"><a class="hover-emboss" href="/police/prisonReport">Prison Report</a></li>
+                        <li class="option"><a class="hover-emboss" href="/police/crimeCategoryReport">Crime Category Report</a></li>
+                        <li class="option"><a class="hover-emboss" href="/police/policeStationReport">All Police Stations</a></li>
+                        <li class="option"><a class="hover-emboss" href="/police/viewCirculars">View Circulars</a></li>
+                        <li class="option"><a class="hover-emboss" href="/police/viewComplaints">View Complaints</a></li>
+                        <li class="option"><a class="hover-emboss" href="/police/changePassword">Change Password</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>    
+    </body>
+</html>

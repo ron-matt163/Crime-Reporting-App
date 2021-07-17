@@ -28,7 +28,7 @@ module.exports = app => {
                     res.redirect('/adminDashboard/'+username);
                  }
                  else if(results[0].type==='Police') {
-                    res.redirect('/policeDashboard')
+                    res.redirect('/policeDashboard/'+username)
                  }
               }
               else{

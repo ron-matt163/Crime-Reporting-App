@@ -73,7 +73,7 @@
                 <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Criminal Report</h2>
             </div>
             <div class="row rowform">
-                <a href="/adminDashboard/<%= username %>" style = "padding-left: 1000px; text-decoration: underline; color:navy">Go Back</a>
+                <a href="/policeDashboard/<%= username %>" style = "padding-left: 1000px; text-decoration: underline; color:navy">Go Back</a>
             </div>
             <br>
             <table>
@@ -106,10 +106,10 @@
                         <td><%= criminal[i].state %></td>
                         <td><%= criminal[i].country %></td>
                         <td>
-                            <a href="/admin/criminalReport/edit/<%= criminal[i].id %>" class="btn btn-info btn-sm">Edit</a>
+                            <a href="/police/criminalReport/edit/<%= criminal[i].id %>" class="btn btn-info btn-sm">Edit</a>
                         </td>
                         <td>
-                            <a href="/admin/criminalReport/delete/<%= criminal[i].id %>" class="btn btn-danger btn-sm">Delete</a>
+                            <a href="/police/criminalReport/delete/<%= criminal[i].id %>" class="btn btn-danger btn-sm">Delete</a>
                         </td>
                       </tr>
                 <% } %>

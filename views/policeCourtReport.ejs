@@ -32,6 +32,26 @@
             tr:nth-child(even) {
                 background-color: #dddddd;
             }
+            .alert {
+            padding: 20px;
+            background-color: #04AA6D;
+            color: white;
+            }
+
+            .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            }
+
+            .closebtn:hover {
+            color: black;
+            }
         </style> 
         <script>
             function goBack() {
@@ -42,8 +62,15 @@
     <body>
         <%- include ('partials/loginNav') -%>
         <div class="container-fluid" style="align-content: center; width: 60%">
+            <% if (message.length > 0) { %>
+                <!-- <div class="alert alert-success col-sm-12" style="width: 80%; text-align: center; font-size: 140%; margin-left: 10%;"><%= message %></div> -->
+                <div class="alert" style="margin-top: 15px; width: 80%; margin-left: 10%;">
+                    <strong>Success!</strong> <%= message %>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                </div>
+            <% } %>
             <div class="row" style="margin-top: 15px;">
-                <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Police Stations</h2>
+                <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Court Report</h2>
             </div>
             <div class="row rowform">
                 <a onclick="goBack()" style = "padding-left: 1000px; text-decoration: underline; color:navy">Go Back</a>
@@ -52,24 +79,19 @@
             <table>
                 <tr>
                   <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
+                  <th>Type</th>
                   <th>Address</th>
                   <th>City</th>
-                  <th>State</th>
                 </tr>
-                <% for ( const i in policestations ) { %>
+                <% for ( const i in court ) { %>
                     <tr>
-                        <td><%= policestations[i].name%></td>
-                        <td><%= policestations[i].email %></td>
-                        <td><%= policestations[i].phone %></td>
-                        <td><%= policestations[i].address %></td>
-                        <td><%= policestations[i].city %></td>
-                        <td><%= policestations[i].state %></td>
+                        <td><%= court[i].court_name%></td>
+                        <td><%= court[i].court_type %></td>
+                        <td><%= court[i].address %></td>
+                        <td><%= court[i].city%></td>
                       </tr>
                 <% } %>
                 </table>
         </div>
     </body>
-
 </html>

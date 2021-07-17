@@ -61,7 +61,7 @@
     </head>
     <body>
         <%- include ('partials/loginNav') -%>
-        <div class="container-fluid" style="align-content: center; width: 80%">
+        <div class="container-fluid" style="align-content: center; width: 60%">
             <% if (message.length > 0) { %>
                 <!-- <div class="alert alert-success col-sm-12" style="width: 80%; text-align: center; font-size: 140%; margin-left: 10%;"><%= message %></div> -->
                 <div class="alert" style="margin-top: 15px; width: 80%; margin-left: 10%;">
@@ -70,46 +70,34 @@
                 </div>
             <% } %>
             <div class="row" style="margin-top: 15px;">
-                <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Criminal Report</h2>
+                <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Crime Report</h2>
             </div>
             <div class="row rowform">
-                <a href="/adminDashboard/<%= username %>" style = "padding-left: 1000px; text-decoration: underline; color:navy">Go Back</a>
+                <a href="/policeDashboard/<%= username %>" style = "padding-left: 1000px; text-decoration: underline; color:navy">Go Back</a>
             </div>
             <br>
             <table>
                 <tr>
-                  <th>Name</th>
-                  <th>Phone</th>
-                  <th>Height</th>
-                  <th>Weight</th>
-                  <th>Prison</th>
-                  <th>Email</th>
-                  <th>DOB</th>
-                  <th>Address</th>
-                  <th>City</th>
-                  <th>State</th>
-                  <th>Country</th>
+                  <th>Category</th>
+                  <th>Court Name</th>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Place</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
-                <% for ( const i in criminal ) { %>
+                <% for ( const i in crime ) { %>
                     <tr>
-                        <td><%= criminal[i].name %></td>
-                        <td><%= criminal[i].phone %></td>
-                        <td><%= criminal[i].height %></td>
-                        <td><%= criminal[i].weight %></td>
-                        <td><%= criminal[i].prison %></td>
-                        <td><%= criminal[i].email %></td>
-                        <td style="white-space: nowrap;"><%= criminal[i].dob %></td>
-                        <td><%= criminal[i].address %></td>
-                        <td><%= criminal[i].city %></td>
-                        <td><%= criminal[i].state %></td>
-                        <td><%= criminal[i].country %></td>
+                        <td><%= crime[i].category%></td>
+                        <td><%= crime[i].court_name %></td>
+                        <td style="white-space: nowrap;"><%= crime[i].date %></td>
+                        <td><%= crime[i].description%></td>
+                        <td><%= crime[i].place %></td>
                         <td>
-                            <a href="/admin/criminalReport/edit/<%= criminal[i].id %>" class="btn btn-info btn-sm">Edit</a>
+                            <a href="/police/crimeReport/edit/<%= crime[i].id %>" class="btn btn-info btn-sm">Edit</a>
                         </td>
                         <td>
-                            <a href="/admin/criminalReport/delete/<%= criminal[i].id %>" class="btn btn-danger btn-sm">Delete</a>
+                            <a href="/police/crimeReport/delete/<%= crime[i].id %>" class="btn btn-danger btn-sm">Delete</a>
                         </td>
                       </tr>
                 <% } %>

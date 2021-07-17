@@ -15,6 +15,7 @@ var app = express();
 //set up template engine
 var mysql = require('mysql');
 const adminFeatureController = require('./controllers/adminFeatureController');
+const policeFeatureController = require('./controllers/policeFeatureController');
 
 var connection = mysql.createConnection({
     host     : 'localhost',
@@ -63,6 +64,7 @@ global.message = "";
 userController(app);
 citizenFeatureController(app);
 adminFeatureController(app);
+policeFeatureController(app);
 
 app.get('/about',(req,res) => {
     res.render('about');
