@@ -719,7 +719,7 @@ module.exports = app => {
     //Crime Report
     app.get('/admin/crimeReport', (req,res) => {
         message = '';
-        var sql = "SELECT A.id, A.category, B.court_name, A.date, A.description, A.place FROM Court B, Crime A WHERE B.id = A.court_id";
+        var sql = "SELECT A.id, C.name, A.category, D.court_name, A.date, A.description, A.place, A.photo_file FROM Crime A, Crime_Criminal B, Criminal C, Court D where A.id=B.crime_id AND B.criminal_id = C.id AND D.id = A.court_id";
         db.query(sql, function(err, rows, results) {
             for(i=0;i<rows.length;i++) {
                 date = rows[i].date.toString().split(" ");
@@ -751,9 +751,9 @@ module.exports = app => {
     app.get('/admin/crimeReport/edit/:id', (req,res) => {
         message = '';
         var id = req.params.id;
-        var sql = "SELECT A.id, A.category, B.court_name, A.date, A.description, A.place FROM Court B, Crime A WHERE B.id = A.court_id AND A.id = " + id + ";SELECT * FROM Court;SELECT * FROM Crime_Category";
+        var sql = "SELECT A.id, A.category, B.court_name, A.date, A.description, A.place FROM Court B, Crime A WHERE B.id = A.court_id AND A.id = " + id + ";SELECT * FROM Court;SELECT * FROM Crime_Category;SELECT * FROM Criminal";
         db.query(sql, function(err, rows, results) {
-            res.render('adminCrimeReportEdit', { crimes: rows[0], courts: rows[1], categories:rows[2] })
+            res.render('adminCrimeReportEdit', { crimes: rows[0], courts: rows[1], categories:rows[2], criminals: rows[3] })
         });        
     });
 
@@ -762,12 +762,13 @@ module.exports = app => {
         var id = req.params.id;
         if(req.method == 'POST') {
             var post = req.body;
+            var criminal_id = post.criminal;
             var category = post.category;
             var court = post.court;
             var date = post.date;
             var description = post.description;
             var place = post.place;
-            var sql = "UPDATE `Crime` SET `category` = '" + category + "',`court_id` = " + court + ",`date` = '" + date + "',`description` = '" + description + "',`place` = '" + place + "'  WHERE id = " + id + "";
+            var sql = "UPDATE `Crime` SET `category` = '" + category + "',`court_id` = " + court + ",`date` = '" + date + "',`description` = '" + description + "',`place` = '" + place + "'  WHERE id = " + id + ";UPDATE `Crime_Criminal` SET `criminal_id` = " + criminal_id + " WHERE crime_id = " + id + "";
             var query = db.query(sql, function(err, result) {
                 if (err) {
                     message1 = '';
