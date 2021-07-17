@@ -72,6 +72,15 @@
                         <a onclick="goBack()" style = "padding-left: 695px; text-decoration: underline; color:navy">Go Back</a>
                     </div>
                     <div class="row rowform">
+                        <label class="col-sm-4">Select Criminal<span style="color: red; font-size: small; margin: 5px;">*</span></label>
+                        <select class="col-sm-8 reqinput" name="criminal" style="width: 67%; height: 24px; margin: 5px; margin-left: 30px;" required="">
+                            <% for (const criminal in criminals) { %>
+                                <option value="<%= criminals[criminal].id %>"> <%= criminals[criminal].name %> </option>
+                            <% } %>
+                        </select>                        
+                        <p class="errmsg" style="color: red; display: none;">Field is required</p>
+                    </div>
+                    <div class="row rowform">
                         <label class="col-sm-4">Select Category<span style="color: red; font-size: small; margin: 5px;">*</span></label>
                         <select class="col-sm-8 reqinput" name="category" style="width: 67%; height: 24px; margin: 5px; margin-left: 30px;" required="">
                             <% for (const category in categories) { %>

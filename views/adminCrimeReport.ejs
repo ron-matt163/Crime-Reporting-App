@@ -78,6 +78,7 @@
             <br>
             <table>
                 <tr>
+                  <th>Criminal</th>  
                   <th>Category</th>
                   <th>Court Name</th>
                   <th>Date</th>
@@ -88,6 +89,7 @@
                 </tr>
                 <% for ( const i in crime ) { %>
                     <tr>
+                        <td><%= crime[i].name%></td>
                         <td><%= crime[i].category%></td>
                         <td><%= crime[i].court_name %></td>
                         <td style="white-space: nowrap;"><%= crime[i].date %></td>
