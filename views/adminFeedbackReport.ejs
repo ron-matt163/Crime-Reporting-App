@@ -1,0 +1,131 @@
+<html>
+    <head>
+        <%- include ('partials/head') -%>      
+        <style>
+            .container-fluid {
+                margin-top: 5%;
+                margin-bottom: 5%;
+                border:black; 
+                border-width:1px; 
+                border-style:solid;
+                border-radius: 25px;
+                background-color: lightblue;
+                color: black;
+            }
+            table {
+                margin-bottom: 2.5%;
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+                border-radius: 25px;
+                border-color: rgb(14, 14, 99);
+
+            }
+
+            td, th {
+                border: 1px solid grey;  
+                text-align: left;
+                padding: 8px;
+                color: black;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+            .alert {
+            padding: 20px;
+            background-color: #04AA6D;
+            color: white;
+            }
+
+            .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            }
+
+            .closebtn:hover {
+            color: black;
+            }
+        </style> 
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+            function showDetails(i,n) {
+                i = i.toString();
+                console.log(i);
+                console.log(n);
+                for(var j=0; j<n; j++) {
+                    document.getElementById(j.toString()).style.display = "none";
+                }
+                document.getElementById(i).style.display = "block";
+            }
+            function hideDetails(i) {
+                i = i.toString();
+                document.getElementById(i).style.display = "none";
+            }
+        </script>
+    </head>
+    <body>
+        <%- include ('partials/loginNav') -%>
+        <div class="container-fluid" style="align-content: center; width: 60%">
+            <% if (message.length > 0) { %>
+                <!-- <div class="alert alert-success col-sm-12" style="width: 80%; text-align: center; font-size: 140%; margin-left: 10%;"><%= message %></div> -->
+                <div class="alert" style="margin-top: 15px; width: 80%; margin-left: 10%;">
+                    <strong>Success!</strong> <%= message %>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                </div>
+            <% } %>
+            <div class="row" style="margin-top: 15px;">
+                <h2 class="header" style="font-size: 50px; margin-bottom: 50px;">Feed back Report</h2>
+            </div>
+            <div class="row rowform">
+                <a href="/adminDashboard/<%= username %>" style = "padding-left: 1000px; text-decoration: underline; color:navy">Go Back</a>
+            </div>
+            <br>
+            <table>
+                <tr>
+                  <th>Name</th>
+                  <th>Company</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Message</th>
+                  <th>Delete</th>
+                </tr>
+                <% for ( const i in feedback ) { %>
+                    <% n = feedback.length %>
+                    <tr>
+                        <td><%= feedback[i].name%></td>
+                        <td><%= feedback[i].company%></td>
+                        <td><%= feedback[i].email%></td>
+                        <td><%= feedback[i].phone%></td>
+                        <td><a style="color:navy" onclick="showDetails(<%= i %>,<%= n %>)">View Message</a></td>
+                        <div class="modal-dialog" id="<%= i %>" style="display: none;">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Feedback</h5>
+                                <button type="button" class="btn-close" onclick="hideDetails(<%= i %>)"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><%= feedback[i].message %></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="hideDetails(<%= i %>)">Close</button>
+                            </div>
+                            </div>
+                        </div>
+                        <td>
+                            <a href="/admin/feedbackReport/delete/<%= feedback[i].email %>" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                      </tr>
+                <% } %>
+                </table>
+        </div>
+    </body>
+</html>
