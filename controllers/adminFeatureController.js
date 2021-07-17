@@ -356,6 +356,8 @@ module.exports = app => {
         }
     });
 
+
+    //Police Report
     app.get('/admin/policeReport', (req,res) => {
         message = '';
         var sql = "SELECT * FROM `User` WHERE type = 'Police'";
@@ -427,6 +429,7 @@ module.exports = app => {
         }
     });
 
+    //Prison Report
     app.get('/admin/prisonReport',(req,res) => {
         message = '';
         var sql = "SELECT * FROM `Prison`";
@@ -489,6 +492,7 @@ module.exports = app => {
         }
     });
 
+    //Police Station Report
     app.get('/admin/policeStationReport', (req,res) => {
         message = '';
         var sql = "SELECT * FROM `Police_Station`";
@@ -515,8 +519,49 @@ module.exports = app => {
         });
     });
     
-    //Crime category Report
+    app.get('/admin/policeStationReport/edit/:id', (req,res) => {
+        message = '';
+        var id = req.params.id;
+        var sql = "SELECT * FROM `Police_Station` WHERE id = '" + id +"'";
+        db.query(sql, function(err, rows, results) {
+            res.render('adminPoliceStationReportEdit', { police: rows[0] })
+        });        
+    });
+
+    app.post('/admin/policeStationReport/edit/:id',urlencodedParser,(req,res) => { 
+        message = '';
+        var id= req.params.id;
+        if(req.method == 'POST') {
+            var post = req.body;
+            var name = post.stationName;
+            var email= post.email;
+            var city = post.city;
+            var state = post.state;
+            var address = post.address;
+            var phone = post.phone;
+            var sql = "UPDATE `Police_Station` SET `name` = '" + name + "',`email` = '" + email + "', `city` = '" + city + "', `phone` = '" + phone + "', `state` = '" + state + "', `address` = '" + address + "' WHERE id = '" + id +"'";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message1 = '';
+                    throw err;
+                }
+                else {
+                  message1 = 'Police station record has been updated';
+                }
+                res.redirect('/admin/policeStationReport');
+             });
+        }
+        else {
+            res.redirect('/admin/policeStationReport/edit/'+id);
+        }
+    });
+
+
+
+
+
     
+    //Crime category Report 
     app.get('/admin/crimeCategoryReport', (req,res) => {
         message = '';
         var sql = "SELECT * FROM `Crime_Category`";
@@ -526,10 +571,11 @@ module.exports = app => {
         });
     });
     
-    app.get('/admin/crimeCategoryReport/delete/:category', (req,res) => {
+    app.get('/admin/crimeCategoryReport/delete/:category/:description', (req,res) => {
         message = '';
         var category = req.params.category;
-        var sql = "DELETE FROM `Crime_Category` WHERE category = '" + category+"'";
+        var description = req.params.description;
+        var sql = "DELETE FROM `Crime_Category` WHERE category = '" + category +"' AND description = '" + description + "'";
         var query = db.query(sql, function(err, result) {
             if (err) {
                 message1 = '';
@@ -538,10 +584,48 @@ module.exports = app => {
             else {
                 message1 = 'Record deleted.'
             }
-    
             res.redirect('/admin/crimeCategoryReport');
         });
     });
+
+    app.get('/admin/crimeCategoryReport/edit/:category/:description', (req,res) => {
+        message = '';
+        var category = req.params.category;
+        var description = req.params.description;
+        var sql = "SELECT * FROM `Crime_Category` WHERE category = '" + category +"' AND description = '" + description + "'";
+        db.query(sql, function(err, rows, results) {
+            res.render('adminCrimeCategoryReportEdit', { crimes: rows[0] })
+        });        
+    });
+
+    app.post('/admin/crimeCategoryReport/edit/:category/:description',urlencodedParser,(req,res) => { 
+        message = '';
+        var category = req.params.category;
+        var description = req.params.description;
+        if(req.method == 'POST') {
+            var post = req.body;
+            var category2 = post.category;
+            var description2 = post.description;
+            var sql = "UPDATE `Crime_Category` SET `category` = '" + category2 + "',`description` = '" + description2 + "' WHERE category = '" + category +"' AND description = '" + description + "'";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message1 = '';
+                    throw err;
+                }
+                else {
+                  message1 = 'Crime category record has been updated';
+                }
+                res.redirect('/admin/crimeCategoryReport');
+             });
+        }
+        else {
+            res.redirect('/admin/crimeCategoryReport/edit/'+ category + '/' + description);
+        }
+    });
+
+    
+
+
         
     // Court Type Report
     app.get('/admin/courtTypeReport', (req,res) => {
@@ -553,10 +637,11 @@ module.exports = app => {
         });
     });
     
-    app.get('/admin/courtTypeReport/delete/:type', (req,res) => {
+    app.get('/admin/courtTypeReport/delete/:type/:description', (req,res) => {
         message = '';
-        var type = req.params.type
-        var sql = "DELETE FROM `Court_Type` WHERE type = '" + type+"'" ;
+        var type = req.params.type;
+        var description = req.params.description;
+        var sql = "DELETE FROM `Court_Type` WHERE type = '" + type +"' AND description = '" + description + "'";
         var query = db.query(sql, function(err, result) {
             if (err) {
                 message1 = '';
@@ -570,23 +655,25 @@ module.exports = app => {
         });
     });
 
-    app.get('/admin/courtTypeReport/edit/:type', (req,res) => {
+    app.get('/admin/courtTypeReport/edit/:type/:description', (req,res) => {
         message = '';
         var type = req.params.type;
-        var sql = "SELECT * FROM `Court_Type` WHERE type = '" + type + "'";
+        var description = req.params.description;
+        var sql = "SELECT * FROM `Court_Type` WHERE type = '" + type + "' AND description = '" + description + "'";
         db.query(sql, function(err, rows, results) {
             res.render('adminCourtTypeEdit', { type: rows[0] })
         });        
     });
     
-    app.post('/admin/courtTypeReport/edit/:type',urlencodedParser,(req,res) => { 
+    app.post('/admin/courtTypeReport/edit/:type/:description',urlencodedParser,(req,res) => { 
         message = '';
         var type = req.params.type;
+        var description = req.params.description;
         if(req.method == 'POST') {
             var post = req.body;
-            var typenew = post.type;
-            var description = post.description;
-            var sql = "UPDATE `Court_Type` SET  `description` = '" + description+"',`type` = '" + typenew+"' WHERE type = '" + type + "'";
+            var type2 = post.type;
+            var description2 = post.description;
+            var sql = "UPDATE `Court_Type` SET  `description` = '" + description2 +"',`type` = '" + type2 +"' WHERE type = '" + type + "' AND description = '" + description + "'";
             var query = db.query(sql, function(err, result) {
                 if (err) {
                     message1 = '';
@@ -599,10 +686,11 @@ module.exports = app => {
              });
         }
         else {
-            res.redirect('/admin/courtTypeReport/edit/'+usern);
+            res.redirect('/admin/courtTypeReport/edit/'+ type +'/'+ description);
         }
     });
 
+    //Circulars
     app.get('/admin/viewCirculars',(req,res) => {
         message = '';
         var sql = "SELECT * FROM `Article`";
@@ -624,7 +712,6 @@ module.exports = app => {
             else {
                 message1 = 'Record deleted.';
             }
-
             res.redirect('/admin/viewCirculars');
         });
     });

@@ -88,10 +88,10 @@
                         <td><%= crime[i].category%></td>
                         <td><%= crime[i].description %></td>
                         <td>
-                            <a href="/admin/crimeCategoryReport/edit/<%= crime[i].category %>" class="btn btn-info btn-sm">Edit</a>
+                            <a href="/admin/crimeCategoryReport/edit/<%= crime[i].category %>/<%= crime[i].description %>" class="btn btn-info btn-sm">Edit</a>
                         </td>
                         <td>
-                            <a href="/admin/crimeCategoryReport/delete/<%= crime[i].category %>" class="btn btn-danger btn-sm">Delete</a>
+                            <a href="/admin/crimeCategoryReport/delete/<%= crime[i].category %>/<%= crime[i].description %>" class="btn btn-danger btn-sm">Delete</a>
                         </td>
                       </tr>
                 <% } %>
