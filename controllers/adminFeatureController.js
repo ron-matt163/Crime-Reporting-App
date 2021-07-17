@@ -819,10 +819,14 @@ module.exports = app => {
     app.get('/admin/criminalReport/edit/:id', (req,res) => {
         message = '';
         var id = req.params.id;
-        var sql = "SELECT A.id, A.name, A.phone, A.height, A.weight, B.name AS prison, A.email, A.dob, A.address, A.city, A.state, A.country, A.photo_file FROM Criminal A, Prison B where A.prison_id = B.id AND A.id = " + id + ";SELECT * FROM Prison";
-        db.query(sql, function(err, rows, results) {
-            res.render('adminCriminalReportEdit', { criminals: rows[0], prisons: rows[1] })
-        });        
+        var sql1 = "SELECT P.name FROM Criminal C,Prison P WHERE C.prison_id=P.id AND C.id="+id+"";
+        db.query(sql1,function(err,rows,results) {
+            var imprisoned_at = rows[0].name;
+            var sql = "SELECT A.id, A.name, A.phone, A.height, A.weight, B.name AS prison, A.email, A.dob, A.address, A.city, A.state, A.country, A.photo_file FROM Criminal A, Prison B where A.prison_id = B.id AND A.id = " + id + ";SELECT * FROM Prison";
+            db.query(sql, function(err, rows, results) {
+                res.render('adminCriminalReportEdit', { criminals: rows[0], prisons: rows[1], imprisoned: imprisoned_at })
+            });
+        });     
     });
 
     app.post('/admin/criminalReport/edit/:id',urlencodedParser,(req,res) => { 
@@ -917,6 +921,32 @@ module.exports = app => {
         else {
             res.redirect('/admin/courtReport/edit/'+id);
         }
+    });
+
+    app.get('/admin/feedbackReport', (req,res) => {
+        message = '';
+        var sql = "SELECT * FROM `Feedback`";
+        db.query(sql, function(err, rows, results) {
+            res.render('adminFeedbackReport', { feedback: rows, message: message1 });
+            message1 = '';
+        });
+    });
+    
+    app.get('/admin/feedbackReport/delete/:user', (req,res) => {
+        message = '';
+        var usern = req.params.user;
+        var sql = "DELETE FROM `Feedback` WHERE email = '" + usern + "'";
+        var query = db.query(sql, function(err, result) {
+            if (err) {
+                message1 = '';
+                throw err;
+            }
+            else {
+                message1 = 'Record deleted.'
+            }
+    
+            res.redirect('/admin/feedbackReport');
+        });
     });
 
 };

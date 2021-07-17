@@ -324,10 +324,14 @@ module.exports = app => {
     app.get('/police/criminalReport/edit/:id', (req,res) => {
         message = '';
         var id = req.params.id;
-        var sql = "SELECT A.id, A.name, A.phone, A.height, A.weight, B.name AS prison, A.email, A.dob, A.address, A.city, A.state, A.country, A.photo_file FROM Criminal A, Prison B where A.prison_id = B.id AND A.id = " + id + ";SELECT * FROM Prison";
-        db.query(sql, function(err, rows, results) {
-            res.render('policeCriminalReportEdit', { criminals: rows[0], prisons: rows[1] })
-        });        
+        var sql1 = "SELECT P.name FROM Criminal C,Prison P WHERE C.prison_id=P.id AND C.id="+id+"";
+        db.query(sql1,function(err,rows,results) {
+            var imprisoned_at = rows[0].name;
+            var sql = "SELECT A.id, A.name, A.phone, A.height, A.weight, B.name AS prison, A.email, A.dob, A.address, A.city, A.state, A.country, A.photo_file FROM Criminal A, Prison B where A.prison_id = B.id AND A.id = " + id + ";SELECT * FROM Prison";
+            db.query(sql, function(err, rows, results) {
+                res.render('policeCriminalReportEdit', { criminals: rows[0], prisons: rows[1], imprisoned: imprisoned_at })
+            });
+        });  
     });
 
     app.post('/police/criminalReport/edit/:id',urlencodedParser,(req,res) => { 
@@ -372,4 +376,67 @@ module.exports = app => {
             res.render('policeCourtReport', { court: rows })
         });
     });
+
+    app.get('/police/viewComplaints', (req,res) => {
+        message = '';
+        var sql = "SELECT C.username,C.id,C.type,C.title,C.address,C.details,C.status,P.name from `Complaint` C, `Police_Station` P WHERE P.id = C.police_station_id";
+        db.query(sql, function(err, rows, results) {
+            res.render('policeViewComplaints', { complaints: rows, message: message1 });
+            message1='';
+        });
+    });
+
+    app.get('/police/viewComplaints/delete/:id', (req,res) => {
+        message = '';
+        var id = req.params.id;
+        var sql = "DELETE FROM `Complaint` WHERE id = " + id + "";
+        var query = db.query(sql, function(err, result) {
+            if (err) {
+                message1 = '';
+                throw err;
+            }
+            else {
+                message1 = 'Record deleted.'
+            }
+            res.redirect('/police/viewComplaints');
+        });
+    });
+
+    app.get('/police/viewComplaints/edit/:id', (req,res) => {
+        message = '';
+        var id = req.params.id;
+        var sql = "SELECT * from `Complaint` WHERE id = " + id + ";SELECT * FROM Police_Station";
+        db.query(sql, function(err, rows, results) {
+            res.render('policeViewComplaintsEdit', { complaints: rows[0], policestations: rows[1] });
+        });        
+    });
+
+    app.post('/police/viewComplaints/edit/:id',urlencodedParser,(req,res) => { 
+        message = '';
+        var id = req.params.id;
+        if(req.method == 'POST') {
+            var post = req.body;
+            var type = post.type;
+            var title = post.title;
+            var police_station_id = post.policeStation;
+            var address = post.address;
+            var status = post.status;
+            var details = post.details;
+            var sql = "UPDATE `Complaint` SET `type` = '" + type + "',`title` = '" + title + "',`status` = '" + status + "',`police_station_id` = '" + police_station_id + "',`address` = '" + address + "',`details` = '" + details + "' WHERE id = " + id + "";
+            var query = db.query(sql, function(err, result) {
+                if (err) {
+                    message1 = '';
+                    throw err;
+                }
+                else {
+                  message1 = 'Complaints record has been updated';
+                }
+                res.redirect('/police/viewComplaints');
+             });
+        }
+        else {
+            res.redirect('/police/viewComplaints/edit/'+id);
+        }
+    });
+
 };

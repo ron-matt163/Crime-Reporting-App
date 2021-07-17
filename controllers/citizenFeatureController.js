@@ -47,7 +47,7 @@ module.exports = app => {
 
     app.get('/citizen/complaintList', (req,res) => {
         message = '';
-        var sql = "SELECT * from `Complaint` C, `Police_Station` P WHERE P.id = C.police_station_id AND C.username = '" + username + "'";
+        var sql = "SELECT C.username,C.id,C.type,C.title,C.address,C.details,C.status,P.name from `Complaint` C, `Police_Station` P WHERE P.id = C.police_station_id AND C.username = '" + username + "'";
         db.query(sql, function(err,results) {
             res.render('citizenComplaintList', { complaints: results })
         });
