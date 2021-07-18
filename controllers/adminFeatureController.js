@@ -751,10 +751,14 @@ module.exports = app => {
     app.get('/admin/crimeReport/edit/:id', (req,res) => {
         message = '';
         var id = req.params.id;
-        var sql = "SELECT A.id, A.category, B.court_name, A.date, A.description, A.place FROM Court B, Crime A WHERE B.id = A.court_id AND A.id = " + id + ";SELECT * FROM Court;SELECT * FROM Crime_Category;SELECT * FROM Criminal";
-        db.query(sql, function(err, rows, results) {
-            res.render('adminCrimeReportEdit', { crimes: rows[0], courts: rows[1], categories:rows[2], criminals: rows[3] })
-        });        
+        var sql1 =  "SELECT A.name FROM Criminal A, Crime B, Crime_Criminal C WHERE A.id=C.criminal_id AND C.crime_id=" + id + "";
+        db.query(sql1, function(err,rows,results) {
+            var criminal_name = rows[0].name;
+            var sql = "SELECT A.id, A.category, A.court_id, B.court_name, A.date, A.description, A.place FROM Court B, Crime A WHERE B.id = A.court_id AND A.id = " + id + ";SELECT * FROM Court;SELECT * FROM Crime_Category;SELECT * FROM Criminal";
+            db.query(sql, function(err, rows, results) {
+                res.render('adminCrimeReportEdit', { crimes: rows[0], courts: rows[1], categories:rows[2], criminals: rows[3], criminalname: criminal_name })
+            });      
+        });  
     });
 
     app.post('/admin/crimeReport/edit/:id',urlencodedParser,(req,res) => { 

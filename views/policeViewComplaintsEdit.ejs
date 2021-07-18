@@ -68,7 +68,12 @@
                         <label class="col-sm-4">Police Station<span style="color: red; font-size: small; margin: 5px;">*</span></label><br />
                         <select class="col-sm-8 reqinput" name="policeStation" style="width: 67%; height: 24px; margin: 5px; margin-left: 30px;" required="">
                             <% for (const i in policestations) { %>
-                                <option value="<%= policestations[i].id %>"> <%= policestations[i].name %> </option>
+                                <!-- <option value="<%= policestations[i].id %>"> <%= policestations[i].name %> </option> -->
+                                <% if (policestations[i].id === complaints[0].police_station_id ) { %>
+                                    <option value="<%= policestations[i].id %>" selected> <%= policestations[i].name %> </option>
+                                <% } else { %>
+                                    <option value="<%= policestations[i].id %>"> <%= policestations[i].name %> </option>
+                                <% } %>
                             <% } %>
                         </select>
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>

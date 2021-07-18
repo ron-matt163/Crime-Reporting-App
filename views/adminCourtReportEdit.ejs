@@ -62,7 +62,12 @@
                         <label class="col-sm-4">Court Type<span style="color: red; font-size: small; margin: 5px;">*</span></label>
                         <select class="col-sm-8 reqinput" name="courttype" style="width: 67%; height: 24px; margin: 5px; margin-left: 30px;" required="">
                             <% for (const courttype in courttypes) { %>
-                                <option value="<%= courttypes[courttype].type %>"> <%= courttypes[courttype].type %> </option>
+                                <% if (courttypes[courttype].type === courts[0].court_type) { %>
+                                    <option value="<%= courttypes[courttype].type %>" selected> <%= courttypes[courttype].type %> </option>
+                                <% } else { %>
+                                    <option value="<%= courttypes[courttype].type %>"> <%= courttypes[courttype].type %> </option>
+                                <% } %>
+                                <!-- <option value="<%= courttypes[courttype].type %>"> <%= courttypes[courttype].type %> </option> -->
                             <% } %>
                         </select>
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
