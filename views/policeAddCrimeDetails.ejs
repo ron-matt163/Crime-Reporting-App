@@ -51,7 +51,7 @@
             </div>
 
             <div class="row formrow">
-                <form method="POST" action="/police/addCrimeDetails" style="margin-left: 17.5%;">
+                <form method="POST" action="/police/addCrimeDetails" style="margin-left: 17.5%;" enctype="multipart/form-data">
                     <div class="row rowform">
                         <a onclick="goBack()" style = "padding-left: 695px; text-decoration: underline; color:navy">Go Back</a>
                     </div>
@@ -98,7 +98,7 @@
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
                     </div>
                     <div class="row rowform">
-                        <label class="col-sm-4">File</label>
+                        <label class="col-sm-4">Photo</label>
                         <input class="col-sm-8" type="file" name="file" style="background-color: white;">
                     </div>
                     <button type="submit" style="margin-top: 15px; margin-bottom: 15px;" onclick="myFunction()">Submit</button>

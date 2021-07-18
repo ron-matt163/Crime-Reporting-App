@@ -130,7 +130,7 @@ module.exports = app => {
         });
     });
 
-    app.post('/admin/addCrimeDetails',urlencodedParser,(req,res) => { 
+    app.post('/admin/addCrimeDetails',upload.single("file"),(req,res) => { 
         message = '';
         if(req.method == 'POST') {
             var post = req.body;
@@ -140,9 +140,14 @@ module.exports = app => {
             var date = post.date;
             var place= post.place;
             var description= post.description;
-            var file= post.file;
+            if(req.file !== undefined) {
+                var photo= req.file.filename;
+            }
+            else {
+                var photo = post.file;
+            }
             var crime_id;
-            var sql = "INSERT INTO `Crime`(`category`,`court_id`,`date`,`description`,`photo_file`,`place`) VALUES ('" + category + "','" + court_id + "','" + date + "','" + description + "','" + file + "','" + place + "');";
+            var sql = "INSERT INTO `Crime`(`category`,`court_id`,`date`,`description`,`photo_file`,`place`) VALUES ('" + category + "','" + court_id + "','" + date + "','" + description + "','" + photo + "','" + place + "');";
             var query = db.query(sql, function(err, result) {
                 if (err) {
                     message = '';
