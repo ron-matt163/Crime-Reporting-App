@@ -97,6 +97,7 @@
                   <th>Date</th>
                   <th>Description</th>
                   <th>Place</th>
+                  <th>Image</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
@@ -122,6 +123,11 @@
                             </div>
                         </div>
                         <td><%= crime[i].place %></td>
+                        <% if (crime[i].photo_file === 'undefined' || crime[i].photo_file.length === 0) { %>
+                            <td>Unavailable</td>
+                        <% } else { %>
+                            <td><a href="/uploads/<%= crime[i].photo_file %>" target="_blank">View</a></td>
+                        <% } %>
                         <td>
                             <a href="/police/crimeReport/edit/<%= crime[i].id %>" class="btn btn-info btn-sm">Edit</a>
                         </td>
