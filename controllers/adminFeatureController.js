@@ -79,7 +79,7 @@ module.exports = app => {
         res.render('adminAddPoliceOfficers');
     });
 
-    app.post('/admin/addPoliceOfficers',urlencodedParser,(req,res) => { 
+    app.post('/admin/addPoliceOfficers',upload.single("file"),(req,res) => { 
         message = '';
         if(req.method == 'POST') {
             var post = req.body;
@@ -94,12 +94,17 @@ module.exports = app => {
             var city= post.city;
             var state= post.state;
             var country= post.country;
-            var photo= post.photo;
+            if(req.file !== undefined) {
+                var photo= req.file.filename;
+            }
+            else {
+                var photo = post.file;
+            }
             var type= "Police";
             var sql = "INSERT INTO `User`(`name`,`username`,`password`,`phone`,`email`,`dob`,`address`,`city`,`state`,`country`,`photo_file`,`type`) VALUES ('" + name + "','" + uname + "','" + password + "','" + phone + "','" + email + "','" + dob + "','" + address + "','" + city + "','" + state + "','" + country + "','" + photo + "','" + type + "')";
             var query = db.query(sql, function(err, result) {
                 if (err) {
-                    message = '0';
+                    message = '';
                     throw err;
                 }
                 else {
@@ -172,8 +177,9 @@ module.exports = app => {
         
     });
 
-    app.post('/admin/addCriminal',urlencodedParser,(req,res) => { 
+    app.post('/admin/addCriminal',upload.single("file"),(req,res) => { 
         message = '';
+        console.log(req.file);
         if(req.method == 'POST') {
             var post = req.body;
             var name = post.name;
@@ -187,11 +193,16 @@ module.exports = app => {
             var city= post.city;
             var state= post.state;
             var country= post.country;
-            var photo= post.photo;
+            if(req.file !== undefined) {
+                var photo= req.file.filename;
+            }
+            else {
+                var photo = post.photo;
+            }
             var sql = "INSERT INTO `Criminal`(`name`,`height`,`weight`,`prison_id`,`phone`,`email`,`dob`,`address`,`city`,`state`,`country`,`photo_file`) VALUES ('" + name + "','" + height + "','" + weight + "','" + prison_id + "','" + phone + "','" + email + "','" + dob + "','" + address + "','" + city + "','" + state + "','" + country + "','" + photo + "')";
             var query = db.query(sql, function(err, result) {
                 if (err) {
-                    message = '0';
+                    message = '';
                     throw err;
                 }
                 else {
@@ -411,8 +422,7 @@ module.exports = app => {
             var city = post.city;
             var state = post.state;
             var country = post.country;
-            var photo= post.photo;
-            var sql = "UPDATE `User` SET `name` = '" + name + "',`phone` = '" + phone + "',`email` = '" + email + "',`dob` = '" + dob + "',`address` = '" + address + "',`city` = '" + city + "',`state` = '" + state + "',`country` = '" + country + "',`photo_file` = '" + photo + "'  WHERE username = '" + usern + "'";
+            var sql = "UPDATE `User` SET `name` = '" + name + "',`phone` = '" + phone + "',`email` = '" + email + "',`dob` = '" + dob + "',`address` = '" + address + "',`city` = '" + city + "',`state` = '" + state + "',`country` = '" + country + "'  WHERE username = '" + usern + "'";
             var query = db.query(sql, function(err, result) {
                 if (err) {
                     message1 = '';
@@ -849,8 +859,7 @@ module.exports = app => {
             var city = post.city;
             var state = post.state;
             var country = post.country;
-            var photo_file = post.photo_file;
-            var sql = "UPDATE `Criminal` SET `name` = '" + name + "',`height` = " + height + ",`weight` = '" + weight + "',`prison_id` = '" + prison + "',`phone` = '" + phone + "',`email` = '" + email + "',`dob` = '" + dob + "',`address` = '" + address + "',`city` = '" + city + "',`state` = '" + state + "',`country` = '" + country + "',`photo_file` = '" + photo_file + "' WHERE id = " + id + "";
+            var sql = "UPDATE `Criminal` SET `name` = '" + name + "',`height` = " + height + ",`weight` = '" + weight + "',`prison_id` = '" + prison + "',`phone` = '" + phone + "',`email` = '" + email + "',`dob` = '" + dob + "',`address` = '" + address + "',`city` = '" + city + "',`state` = '" + state + "',`country` = '" + country + "' WHERE id = " + id + "";
             var query = db.query(sql, function(err, result) {
                 if (err) {
                     message1 = '';

@@ -88,7 +88,7 @@
                   <th>Address</th>
                   <th>City</th>
                   <th>State</th>
-                  <th>Country</th>
+                  <th>Image</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
@@ -104,7 +104,11 @@
                         <td><%= criminal[i].address %></td>
                         <td><%= criminal[i].city %></td>
                         <td><%= criminal[i].state %></td>
-                        <td><%= criminal[i].country %></td>
+                        <% if (criminal[i].photo_file === 'undefined') { %>
+                            <td>Unavailable</td>
+                        <% } else { %>
+                            <td><a href="/uploads/<%= criminal[i].photo_file %>" target="_blank">View</a></td>
+                        <% } %>
                         <td>
                             <a href="/police/criminalReport/edit/<%= criminal[i].id %>" class="btn btn-info btn-sm">Edit</a>
                         </td>
