@@ -74,8 +74,12 @@
                     <div class="row rowform">
                         <label class="col-sm-4">Select Criminal<span style="color: red; font-size: small; margin: 5px;">*</span></label>
                         <select class="col-sm-8 reqinput" name="criminal" style="width: 67%; height: 24px; margin: 5px; margin-left: 30px;" required="">
-                            <% for (const criminal in criminals) { %>
-                                <option value="<%= criminals[criminal].id %>"> <%= criminals[criminal].name %> </option>
+                            <% for (const i in criminals) { %>
+                                <% if (criminals[i].name === criminalname) { %>
+                                    <option value="<%= criminals[i].id %>" selected> <%= criminals[i].name %> </option>
+                                <% } else { %>
+                                    <option value="<%= criminals[i].id %>"> <%= criminals[i].name %> </option>
+                                <% } %>
                             <% } %>
                         </select>                        
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
@@ -84,7 +88,11 @@
                         <label class="col-sm-4">Select Category<span style="color: red; font-size: small; margin: 5px;">*</span></label>
                         <select class="col-sm-8 reqinput" name="category" style="width: 67%; height: 24px; margin: 5px; margin-left: 30px;" required="">
                             <% for (const category in categories) { %>
-                                <option value="<%= categories[category].category %>"> <%= categories[category].category %> </option>
+                                <% if (categories[category].category === crimes[0].category) { %>
+                                    <option value="<%= categories[category].category %>" selected> <%= categories[category].category %> </option>
+                                <% } else { %>
+                                    <option value="<%= categories[category].category %>"> <%= categories[category].category %> </option>
+                                <% } %>
                             <% } %>
                         </select>                        
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>
@@ -93,7 +101,12 @@
                         <label class="col-sm-4">Select Court<span style="color: red; font-size: small; margin: 5px;">*</span></label>
                         <select class="col-sm-8 reqinput" name="court" style="width: 67%; height: 24px; margin: 5px; margin-left: 30px;" required="">
                             <% for (const court in courts) { %>
-                                <option value="<%= courts[court].id %>"> <%= courts[court].court_name %> </option>
+                                <% if (courts[court].id === crimes[0].court_id) { %>
+                                    <option value="<%= courts[court].id %>" selected> <%= courts[court].court_name %> </option>
+                                <% } else { %>
+                                    <option value="<%= courts[court].id %>"> <%= courts[court].court_name %> </option>
+                                <% } %>
+                                <!-- <option value="<%= courts[court].id %>"> <%= courts[court].court_name %> </option> -->
                             <% } %>
                         </select>
                         <p class="errmsg" style="color: red; display: none;">Field is required</p>

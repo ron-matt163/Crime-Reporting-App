@@ -377,6 +377,7 @@ module.exports = app => {
         });
     });
 
+    // Complaints
     app.get('/police/viewComplaints', (req,res) => {
         message = '';
         var sql = "SELECT C.username,C.id,C.type,C.title,C.address,C.details,C.status,P.name from `Complaint` C, `Police_Station` P WHERE P.id = C.police_station_id";
